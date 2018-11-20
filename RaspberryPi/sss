@@ -1,0 +1,10 @@
+#!/bin/bash
+sudo sh -c "echo 0 > /sys/class/graphics/fb0/blank"
+for i in `seq 100`;do sleep 55; blank0; done&
+export DISPLAY=:0
+#sudo -u pi xhost +
+#cd /home/pi/movidius/ncsdk_v2/v2.08.01.02/ssd_cameraDemo
+cd /home/pi/EdgeTPU/RaspberryPi/
+#xterm -fn -*-*-*-*-*-*-14-140-*-*-*-92-*-* -geometry +10+10 -e "python3 cam_detector.py -F 0 -H 432 -W 592 -X 10 -Y 10"
+xterm -fn -*-*-*-*-*-*-14-140-*-*-*-92-*-* -geometry +10+10 -e "python3 demo_csi_ssd_mobilenet.py -crw 480 -crh 320"
+
