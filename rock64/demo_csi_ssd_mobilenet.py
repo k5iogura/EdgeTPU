@@ -12,33 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-r"""A demo for object detection.
-
-For Raspberry Pi, you need to install 'feh' as image viewer:
-sudo apt-get install feh
-
-Example (Running under python-tflite-source/edgetpu directory):
-
-  - Under the parent directory python-tflite-source.
-
-  - Face detection:
-    python3.5 edgetpu/demo/object_detection.py \
-    --model='test_data/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite' \
-    --input='test_data/face.jpg'
-
-  - Pet detection:
-    python3.5 edgetpu/demo/object_detection.py \
-    --model='test_data/ssd_mobilenet_v1_fine_tuned_edgetpu.tflite' \
-    --label='test_data/pet_labels.txt' \
-    --input='test_data/pets.jpg'
-
-'--output' is an optional flag to specify file name of output image.
-"""
+# Supports Pi-Camera CSI Inteface via picamera package.
+# Unsupports USB-Camera.
+# Tested Mobilenet_ssd_v2 model trained with coco dataset.
 
 import argparse
-import platform
-#import subprocess
-from edgetpu.detection.engine import DetectionEngine
 from PIL import Image
 from PIL import ImageDraw
 from pdb import *
@@ -48,6 +26,7 @@ import numpy as np
 from time import time
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+from edgetpu.detection.engine import DetectionEngine
 
 # Function to read labels from text files.
 def ReadLabelFile(file_path):
@@ -61,27 +40,28 @@ def ReadLabelFile(file_path):
 
 
 def main():
+  def check_file(path):
+        if os.path.exists(path) is True: return path
   parser = argparse.ArgumentParser()
   parser.add_argument(
-      '-m', '--model', type=str,
+      '-m', '--model', type=check_file,
       default='../model/mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite',
       help='Path of the detection model.'
   )
   parser.add_argument(
-      '-l', '--label',type=str,
+      '-l', '--label',type=check_file,
       default='../model/coco_labels.txt',
       help='Path of the labels file.'
   )
-  parser.add_argument(
-      '--threshold', type=float, default=0.45, help='Threshold for DetectionEngine')
-  parser.add_argument("-cfr", "--camera_framerate",   type=int,     default= 120,help="Maximum Framerate for CSI")
-  parser.add_argument("-crw", "--camera_resolution_w",type=int,     default= 320,help="Camera Width")
-  parser.add_argument("-crh", "--camera_resolution_h",type=int,     default= 240,help="Camera Height")
+  parser.add_argument("-th",  "--threshold",          type=float, default=0.45, help='Threshold for DetectionEngine')
+  parser.add_argument("-cfr", "--camera_framerate",   type=int,   default= 120,help="Maximum Framerate for CSI")
+  parser.add_argument("-crw", "--camera_resolution_w",type=int,   default= 320,help="Camera Width")
+  parser.add_argument("-crh", "--camera_resolution_h",type=int,   default= 240,help="Camera Height")
   args = parser.parse_args()
 
   # Initialize engine.
   engine = DetectionEngine(args.model)
-  labels = ReadLabelFile(args.label) if args.label else None
+  labels = ReadLabelFile(args.label)
 
   camera = PiCamera()
   camera.framerate = args.camera_framerate
@@ -100,6 +80,7 @@ def main():
       ans = engine.DetectWithImage(img, threshold=args.threshold, keep_aspect_ratio=True,
                                    relative_coord=False, top_k=10)
       elapsed = (time()-start)
+      if img_done==0: print("CameraIn = ",Img.shape)
       img_done+=1
       sys.stdout.write('\b'*20)
       sys.stdout.write("%.2fFPS"%(img_done/elapsed))
