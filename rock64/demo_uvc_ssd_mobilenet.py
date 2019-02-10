@@ -60,9 +60,15 @@ def ReadLabelFile(file_path):
 def main():
   parser = argparse.ArgumentParser()
   parser.add_argument(
-      '--model', help='Path of the detection model.', required=True)
+      '-m', '--model', type=str,
+      default='../model/mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite',
+      help='Path of the detection model.'
+  )
   parser.add_argument(
-      '--label', help='Path of the labels file.', required=True)
+      '-l', '--label',type=str,
+      default='../model/coco_labels.txt',
+      help='Path of the labels file.'
+  )
   parser.add_argument(
       '--input', help='File path of the input image.')
   parser.add_argument(
@@ -87,9 +93,9 @@ def main():
   assert cam is not None
 
   while True:
-      r, img = cam.read()
+      r, Img = cam.read()
       assert r is True
-      img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+      img = cv2.cvtColor(Img, cv2.COLOR_BGR2RGB)
       img = Image.fromarray(np.uint8(img))
       draw = ImageDraw.Draw(img)
 
@@ -97,6 +103,15 @@ def main():
       ans = engine.DetectWithImage(img, threshold=args.threshold, keep_aspect_ratio=True,
                                    relative_coord=False, top_k=10)
 
+      if ans:
+        for obj in ans:
+          box = obj.bounding_box.flatten()
+          box = np.asarray(box,dtype=np.int)
+          Img = cv2.rectangle(Img,(box[0],box[1]),(box[2],box[3]),(255,255,255),2)
+      cv2.imshow('demo',Img)
+      key=cv2.waitKey(1)
+      if key==27: break
+      continue
       # Display result.
       if ans:
         for obj in ans:
