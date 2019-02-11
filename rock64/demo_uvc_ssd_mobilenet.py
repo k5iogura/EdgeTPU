@@ -76,8 +76,10 @@ def main():
       '--output', help='File path of the output image.')
   parser.add_argument(
       '--threshold', type=float, default=0.45, help='Threshold for DetectionEngine')
-  parser.add_argument( '-crw', '--camera_w', type=int, default=320)
-  parser.add_argument( '-crh', '--camera_h', type=int, default=240)
+  parser.add_argument( '-crw', '--camera_w', type=int, default=320, help='camera resolution')
+  parser.add_argument( '-crh', '--camera_h', type=int, default=240, help='camera resolution')
+  parser.add_argument( '-rww', '--resize_w', type=int, default=592, help='resize view windows')
+  parser.add_argument( '-rwh', '--resize_h', type=int, default=432, help='resize view windows')
   args = parser.parse_args()
 
   if not args.output:
@@ -121,33 +123,11 @@ def main():
           box = obj.bounding_box.flatten()
           box = np.asarray(box,dtype=np.int)
           Img = cv2.rectangle(Img,(box[0],box[1]),(box[2],box[3]),(255,255,255),2)
+        Img = cv2.resize(Img,(args.resize_w, args.resize_h))
       cv2.imshow('demo',Img)
       key=cv2.waitKey(1)
       if key==27: break
       continue
-      # Display result.
-      if ans:
-        for obj in ans:
-          print ('-----------------------------------------')
-          if labels:
-            print(labels[obj.label_id])
-          print ('score = ', obj.score)
-          box = obj.bounding_box.flatten().tolist()
-          print ('box = ', box)
-          # Draw a rectangle.
-          draw.rectangle(box, outline='red')
-        img.save(output_name)
-        if platform.machine() == 'x86_64':
-          # For gLinux, simply show the image.
-          img.show()
-        elif platform.machine() == 'armv7l':
-          # For Raspberry Pi, you need to install 'feh' to display image.
-          subprocess.Popen(['feh', output_name])
-        else:
-          print ('Please check ', output_name)
-      else:
-        print ('No object detected!')
-      break
 
 if __name__ == '__main__':
   main()
