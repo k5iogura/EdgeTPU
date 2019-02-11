@@ -45,6 +45,7 @@ from pdb import *
 import sys, os
 import cv2
 import numpy as np
+from time import time
 
 # Function to read labels from text files.
 def ReadLabelFile(file_path):
@@ -75,6 +76,8 @@ def main():
       '--output', help='File path of the output image.')
   parser.add_argument(
       '--threshold', type=float, default=0.45, help='Threshold for DetectionEngine')
+  parser.add_argument( '-crw', '--camera_w', type=int, default=320)
+  parser.add_argument( '-crh', '--camera_h', type=int, default=240)
   args = parser.parse_args()
 
   if not args.output:
@@ -91,7 +94,13 @@ def main():
   #draw = ImageDraw.Draw(img)
   cam = cv2.VideoCapture(0)
   assert cam is not None
+  print("Opened UVC-Camera via /dev/video0")
+  cam.set(cv2.CAP_PROP_FPS,30)
+  cam.set(cv2.CAP_PROP_FRAME_WIDTH,args.camera_w)
+  cam.set(cv2.CAP_PROP_FRAME_HEIGHT,args.camera_h)
 
+  start = time()
+  img_count=0
   while True:
       r, Img = cam.read()
       assert r is True
@@ -102,7 +111,11 @@ def main():
       # Run inference.
       ans = engine.DetectWithImage(img, threshold=args.threshold, keep_aspect_ratio=True,
                                    relative_coord=False, top_k=10)
-
+      during = (time()-start)
+      img_count+=1
+      sys.stdout.write('\b'*20)
+      sys.stdout.write("%.3fFPS"%(img_count/during))
+      sys.stdout.flush()
       if ans:
         for obj in ans:
           box = obj.bounding_box.flatten()
