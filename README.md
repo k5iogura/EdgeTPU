@@ -42,9 +42,9 @@ Investigating *install.sh* script we can found out that script supports bellow C
 ## Edge TPU Accelerator on Rock64@Pine64  
 
 - [Software download](http://wiki.pine64.org/index.php/ROCK64_Software_Release)  
-There are latest version OS supported by Rock64.  
+There are latest OS images supported by Rock64.  
 
 - [Software github](https://github.com/ayufan-rock64/linux-build/releases)  
-There are archives of OS images.  
+There are archives of OS historical images.  
 
 ## Edge TPU Accelerator on RaspberryPi-3 Model B+  
