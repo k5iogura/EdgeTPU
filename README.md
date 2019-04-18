@@ -20,6 +20,7 @@ Any Linux computer with a USB port
 And yes, this means Raspberry Pi is supported. However, it must be Raspberry Pi 2/3 Model B/B+ running Raspbian (or another Debian derivative).  
 
 It's a very easy to install Edge TPU on linux system but not be supported Windows OS.  
+Needs Internet access from host system.  
 
 ```
 cd ~/
