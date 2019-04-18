@@ -19,7 +19,7 @@ Any Linux computer with a USB port
   System architecture of either x86_64 or ARM64 with ARMv8 instruction set  
 And yes, this means Raspberry Pi is supported. However, it must be Raspberry Pi 2/3 Model B/B+ running Raspbian (or another Debian derivative).*  
 
-It's a very easy to install Edge TPU on linux system but not be supported Windows OS.  
+It's a very easy to install Edge TPU on Debian linux system but Windows OS not be supported.  
 Notice!: Needs Internet access from host system.  
 
 ```
@@ -37,7 +37,7 @@ Investigating *install.sh* script we can found out that script supports bellow C
 
 - x86_64 or aarch64  
   When uname -m returns *x86_64* or *aarch64* 64bit library is installed on somewhere of /usr/lib...  
-  If system was 32bit OS on 64bit Hardware 64bit library will be installed and may be system fall into crash!  
+  But if system was 32bit OS on 64bit Hardware then 64bit library will be installed and may be system fall into crash!  
 
 ## Edge TPU Accelerator on Rock64@Pine64  
 
