@@ -23,11 +23,11 @@ It's a very easy to install Edge TPU on Debian linux system but Windows OS is no
 Notice!: Needs Internet access from host system.  
 
 ```
-cd ~/
-wget https://dl.google.com/coral/edgetpu_api/edgetpu_api_latest.tar.gz -O edgetpu_api.tar.gz --trust-server-names
-tar xzf edgetpu_api.tar.gz
-cd edgetpu_api
-bash ./install.sh
+$ cd ~/
+$ wget https://dl.google.com/coral/edgetpu_api/edgetpu_api_latest.tar.gz -O edgetpu_api.tar.gz --trust-server-names
+$ tar xzf edgetpu_api.tar.gz
+$ cd edgetpu_api
+$ bash ./install.sh
 ```
 
 Investigating *install.sh* script we can found out that script supports bellow CPU architectures,  
@@ -55,5 +55,16 @@ We select bellows,
 
 - bionic-lxde-rock64-0.8.0rc9-1120-arm64.img  
   Ubuntu 18.06 64bit build with desktop environment.  
+
+How to check OS bit,  
+```
+$ file /bin/ls
+/bin/ls: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l, for GNU/Linux 2.6.32, BuildID[sha1]=d0bc0fb9b3f60f72bbad3c5a1d24c9e2a1fde775, stripped
+
+or 
+
+$ objdump -p /bin/ls
+/bin/ls:     file format elf64-x86-64
+```
 
 ## Edge TPU Accelerator on RaspberryPi-3 Model B+  
