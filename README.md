@@ -35,8 +35,7 @@ Investigating *install.sh* script we can found out that script supports bellow C
 - armv7l  
   When uname -m returns *armv7l*, 32bit library is installed on somewhere of /usr/lib...  
 
-- x86_64  
-- aarch64  
+- x86_64 or aarch64  
   When uname -m returns *x86_64* or *aarch64* 64bit library is installed on somewhere of /usr/lib...  
   If system was 32bit OS on 64bit Hardware 64bit library will be installed and may be system fall into crash!  
 
