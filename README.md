@@ -19,7 +19,7 @@ Any Linux computer with a USB port
   System architecture of either x86_64 or ARM64 with ARMv8 instruction set  
 And yes, this means Raspberry Pi is supported. However, it must be Raspberry Pi 2/3 Model B/B+ running Raspbian (or another Debian derivative).*  
 
-It's a very easy to install Edge TPU on Debian linux system but Windows OS not be supported.  
+It's a very easy to install Edge TPU on Debian linux system but Windows OS is not supported.  
 Notice!: Needs Internet access from host system.  
 
 ```
