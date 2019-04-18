@@ -13,6 +13,12 @@ Edge TPU expects using USB-3.0 and 64bit aarch64 OS, therefore Rock64@Pine64 is 
 ## Getting start of Google Edge TPU Accelerator Coral.  
 [Getting start](https://coral.withgoogle.com/docs/accelerator/get-started/)  
 
+Requirements  
+Any Linux computer with a USB port  
+  Debian 6.0 or higher, or any derivative thereof (such as Ubuntu 10.0+)  
+  System architecture of either x86_64 or ARM64 with ARMv8 instruction set  
+And yes, this means Raspberry Pi is supported. However, it must be Raspberry Pi 2/3 Model B/B+ running Raspbian (or another Debian derivative).  
+
 It's a very easy to install Edge TPU on linux system but not be supported Windows OS.  
 
 ```
