@@ -47,4 +47,13 @@ There are latest OS images supported by Rock64.
 - [Software github](https://github.com/ayufan-rock64/linux-build/releases)  
 There are archives of OS historical images.  
 
+Rock64@Pine64 is ARM 64bit Hardware therefore with 64bit Debian Linux OS should be selected.  
+
+We select bellows,  
+- Armbian_5.75_Rock64_Debian_stretch_default_4.4.174_desktop  
+  Debian 9 stretch 64bit build with desktop environment.  
+
+- bionic-lxde-rock64-0.8.0rc9-1120-arm64.img  
+  Ubuntu 18.06 64bit build with desktop environment.  
+
 ## Edge TPU Accelerator on RaspberryPi-3 Model B+  
