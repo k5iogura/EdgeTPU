@@ -6,6 +6,10 @@ As of now, Raspbian OS bases on Ubuntu Xenial(16.04 LTS) build as 32bit OS.
 
 Rock64@Pine64 has compatible form factor of RaspberryPi 3 Model B(+), but Rock64@Pine64 supports many variant Destribution of Linux such as Ambian, Ubuntu, Debian etc. android too, and supports 32bit and 64bit OS.    
 
+RaspberryPi-3 has 4 USB-2.0 ports.  
+Rock64@Pine64 has 2 USB-2.0 ports and 1 USB-3.0 port.  
+Edge TPU expects using USB-3.0 and 64bit aarch64 OS, therefore Rock64@Pine64 is suitable for Edge TPU.  
+
 ## Getting start of Google Edge TPU Accelerator Coral.  
 [Getting start](https://coral.withgoogle.com/docs/accelerator/get-started/)  
 
