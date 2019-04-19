@@ -55,6 +55,17 @@ We select bellows,
 
 - bionic-lxde-rock64-0.8.0rc9-1120-arm64.img  
   Ubuntu 18.06 64bit build with desktop environment.  
+  - edit /etc/network/intefaces for DHCP  
+  ```
+  auto eth0
+  allow-
+  iface eth0 inet dhcp
+  ```
+  - Chang keyboard for jp.  
+  ```
+  XKBMODEL="jp106"
+  XKBLAYOUT="jp"
+  ```
 
 How to check OS bit,  
 ```
