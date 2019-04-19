@@ -96,6 +96,11 @@ $ objdump -p /bin/ls
 - Install edgetpu_api according to [geting start](https://coral.withgoogle.com/docs/accelerator/get-started/)  
 - Run *ClassificationEngine* demo with parrot.jpg  
   ```
+  $ cd ~/Downloads/
+  $ wget https://storage.googleapis.com/cloud-iot-edge-pretrained-models/canned_models/mobilenet_v2_1.0_224_inat_bird_quant_edgetpu.tflite \
+    http://storage.googleapis.com/cloud-iot-edge-pretrained-models/canned_models/inat_bird_labels.txt \
+    https://coral.withgoogle.com/static/images/parrot.jpg  --no-check-certificate
+    
   $ cd /usr/local/lib/python3.5/dist-packages/edgetpu/demo
   $ python3 classify_image.py \
     --model ~/Downloads/mobilenet_v2_1.0_224_inat_bird_quant_edgetpu.tflite \
