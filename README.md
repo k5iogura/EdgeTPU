@@ -40,6 +40,9 @@ Investigating *install.sh* script we can found out that script supports bellow C
   When uname -m returns *x86_64* or *aarch64* 64bit library is installed on somewhere of /usr/lib...  
   But if system was 32bit OS on 64bit Hardware then 64bit library will be installed and may be system fall into crash!  
 
+## Python API  
+According to [Python API](https://coral.withgoogle.com/docs/edgetpu/api-intro/) two key api are provided as  *ClassificationEngine* and *DetectionEngine*.   
+
 ## Edge TPU Accelerator on Rock64@Pine64  
 
 - [Software download](http://wiki.pine64.org/index.php/ROCK64_Software_Release)  
