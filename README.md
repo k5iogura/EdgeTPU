@@ -58,10 +58,10 @@ We select bellows,
   - edit /etc/network/intefaces for DHCP  
   ```
   auto eth0
-  allow-
+  allow-hotplug eth0
   iface eth0 inet dhcp
   ```
-  - Chang keyboard for jp.  
+  - Edit /etc/default/keyboard for jp.  
   ```
   XKBMODEL="jp106"
   XKBLAYOUT="jp"
