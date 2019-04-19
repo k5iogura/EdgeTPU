@@ -116,6 +116,7 @@ This demo model can recognize 964 kinds of birds.
 963 Ardenna gravis (Great Shearwater)  
 ...  
 *Ara macao* means KONGO-INKO in japanese. It's a kind of parrot(bird).  
+![](files/parrot.jpg)
 
 - Run *DetectionEngine* demo with face.jpg  
 
