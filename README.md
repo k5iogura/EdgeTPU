@@ -105,5 +105,12 @@ $ objdump -p /bin/ls
      Ara macao (Scarlet Macaw)
      Score :  0.761719 
   ```
-
+This demo models can recognize 964 kinds of birds.  
+...
+960 Anser anser domesticus (Domestic Goose)
+961 Mitrephanes phaeocercus (Tufted Flycatcher)
+962 Ardenna creatopus (Pink-footed Shearwater)
+963 Ardenna gravis (Great Shearwater)
+...
 *Ara macao* means KONGO-INKO in japanese. It's a kind of parrot(bird).  
+
