@@ -121,6 +121,7 @@ This demo model can recognize 964 kinds of birds.
 - Run *DetectionEngine* demo with face.jpg  
 
 ```
+  $ cd ~/Downloads
   $ wget https://storage.googleapis.com/cloud-iot-edge-pretrained-models/canned_models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite https://coral.withgoogle.com/static/images/face.jpg  --no-check-certificate
   # apt instal feh
   $ cd /usr/local/lib/python3.5/dist-packages/edgetpu/demo
