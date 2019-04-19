@@ -102,4 +102,5 @@ $ objdump -p /bin/ls
      Ara macao (Scarlet Macaw)
      Score :  0.761719 
   ```
-  
+
+*Ara macao* means KONGO-INKO in japanese. It's a kind of parrot(bird).  
