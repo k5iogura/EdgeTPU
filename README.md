@@ -17,7 +17,8 @@ According to [Getting start](https://coral.withgoogle.com/docs/accelerator/get-s
 Any Linux computer with a USB port  
   Debian 6.0 or higher, or any derivative thereof (such as Ubuntu 10.0+)  
   System architecture of either x86_64 or ARM64 with ARMv8 instruction set  
-And yes, this means Raspberry Pi is supported. However, it must be Raspberry Pi 2/3 Model B/B+ running Raspbian (or another Debian derivative).*  
+And yes, this means Raspberry Pi is supported. However,
+it must be Raspberry Pi 2/3 Model B/B+ running Raspbian (or another Debian derivative).*  
 
 It's a very easy to install Edge TPU on Debian linux system but Windows OS is not supported.  
 Notice!: Needs Internet access from host system.  
@@ -70,7 +71,8 @@ We select bellows,
 How to check OS bit,  
 ```
 $ file /bin/ls
-/bin/ls: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l, for GNU/Linux 2.6.32, BuildID[sha1]=d0bc0fb9b3f60f72bbad3c5a1d24c9e2a1fde775, stripped
+/bin/ls: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked,
+interpreter /lib64/l, for GNU/Linux 2.6.32, BuildID[sha1]=d0bc0fb9b3f60f72bbad3c5a1d24c9e2a1fde775, stripped
 
 or 
 
@@ -97,7 +99,8 @@ $ objdump -p /bin/ls
     --label ~/Downloads/inat_bird_labels.txt \
     --image ~/Downloads/parrot.jpg
     
-     W0208 14:27:30.933504    1573 package_registry.cc:65] Minimum runtime version required by package (5) is lower than expected(10).
+     W0208 14:27:30.933504    1573 package_registry.cc:65] Minimum runtime
+     version required by package (5) is lower than expected(10).
      ---------------------------
      Ara macao (Scarlet Macaw)
      Score :  0.761719 
