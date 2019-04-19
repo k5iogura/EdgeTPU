@@ -79,3 +79,27 @@ $ objdump -p /bin/ls
 ```
 
 ## Edge TPU Accelerator on RaspberryPi-3 Model B+  
+
+- Install OS image and boot  
+  Download and flash SDCard bellow,  
+  2018-10-09-raspbian-stretch.img  
+  
+- Update system  
+  $ apt update  
+  $ apt upgrade  
+  
+- Install edgetpu_api according to [geting start](https://coral.withgoogle.com/docs/accelerator/get-started/)  
+- Run demo with parrot.jpg  
+  ```
+  $ cd /usr/local/lib/python3.5/dist-packages/edgetpu/demo
+  $ python3 classify_image.py \
+    --model ~/Downloads/mobilenet_v2_1.0_224_inat_bird_quant_edgetpu.tflite \
+    --label ~/Downloads/inat_bird_labels.txt \
+    --image ~/Downloads/parrot.jpg
+    
+     W0208 14:27:30.933504    1573 package_registry.cc:65] Minimum runtime version required by package (5) is lower than expected(10).
+     ---------------------------
+     Ara macao (Scarlet Macaw)
+     Score :  0.761719 
+  ```
+  
