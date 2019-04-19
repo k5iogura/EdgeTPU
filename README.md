@@ -94,7 +94,7 @@ $ objdump -p /bin/ls
   $ apt upgrade  
   
 - Install edgetpu_api according to [geting start](https://coral.withgoogle.com/docs/accelerator/get-started/)  
-- Run demo with parrot.jpg  
+- Run *ClassificationEngine* demo with parrot.jpg  
   ```
   $ cd /usr/local/lib/python3.5/dist-packages/edgetpu/demo
   $ python3 classify_image.py \
@@ -116,3 +116,31 @@ This demo model can recognize 964 kinds of birds.
 963 Ardenna gravis (Great Shearwater)  
 ...  
 *Ara macao* means KONGO-INKO in japanese. It's a kind of parrot(bird).  
+
+- Run *DetectionEngine* demo with face.jpg  
+
+```
+  $ wget https://storage.googleapis.com/cloud-iot-edge-pretrained-models/canned_models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite https://coral.withgoogle.com/static/images/face.jpg  --no-check-certificate
+  # apt instal feh
+  $ python3 object_detection.py \
+    --model ~/Downloads/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite \
+    --input ~/Downloads/face.jpg --output ~/Downloads/detection_results.jpg
+    W0208 15:14:29.736634    2141 package_registry.cc:65] Minimum runtime version required by package (5)
+    is lower than expected (10).
+-----------------------------------------
+score =  0.996094
+box =  [474.22854804992676, 38.03488787482766, 738.8013491630554, 353.5309683683231]
+-----------------------------------------
+score =  0.992188
+box =  [205.4297697544098, 110.28378465056959, 487.75309658050537, 439.73802454331343]
+-----------------------------------------
+score =  0.832031
+box =  [6.2277887016534805, 182.35811898071842, 127.13575917482376, 326.5376813379348]
+-----------------------------------------
+score =  0.5
+box =  [859.8422718048096, 213.5472493581642, 1008.978108882904, 383.9367261515483]
+
+```
+feh : feh/stable,now 2.18-2 armhf imlib2 based image viewer  
+detection_result is,  
+![](files/detection_results.jpg)  
