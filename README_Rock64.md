@@ -8,6 +8,9 @@
 Needs installation from source code reason why pip3 not providing comaptible opencv-phton.  
 
 - First of all,  
+Install bellow in SDCard by Ethcer,  
+Armbian_5.75_Rock64_Debian_stretch_default_4.4.174_desktop.img  
+
 apt install bellow,  
 python3-pip python-pip  
 pip3 install setuptools  
