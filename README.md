@@ -216,7 +216,6 @@ is lower than expected (10).
 Ara macao (Scarlet Macaw)
 Score :  0.761719
 ```
-![](files/parrot.jpg)
 
 - Run *DetectionEngine* demo with face.jpg  
 
@@ -261,3 +260,5 @@ $ ls detection_result.jpg
 
 ![](files/detection_results.jpg)  
 Good:smile:
+
+But opencv-python is not supported for python3 on stretch-minimal  
