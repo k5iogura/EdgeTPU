@@ -49,5 +49,5 @@ python3-dev
     -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.4.3/modules \  
     -D PYTHON_EXECUTABLE=/usr/bin/python3 \  
     -D BUILD_EXAMPLES=OFF ..  
-    $ make j4  
+    $ make -j4  
 ```
