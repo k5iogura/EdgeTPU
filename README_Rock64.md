@@ -8,12 +8,16 @@
 Needs installation from source code reason why pip3 not providing comaptible opencv-phton.  
 
 - First of all,  
-Install bellow in SDCard by Ethcer,  
+Install bellow in SDCard(>16GB) by Ethcer,  
 Armbian_5.75_Rock64_Debian_stretch_default_4.4.174_desktop.img  
+boot!
 
 - apt install bellow,  
 python3-pip python-pip  
 pip3 install setuptools  
+
+- Check Python --version  
+3.5.3
 
 - To avoid pip SSL certificate error, edit ~/.pip/pip.conf like bellow,  
 [global]  
@@ -50,4 +54,15 @@ python3-dev
     -D PYTHON_EXECUTABLE=/usr/bin/python3 \  
     -D BUILD_EXAMPLES=OFF ..  
     $ make -j4  
+    # make install
+    # ldconfig
 ```
+Over 4 hours has elapsed to compile source, Hwuuh,  
+
+- Check build process like bellow,  
+```
+    $ pkg-config --modversion opencv
+    $ find . -iname cv2\*.so
+      ./lib/python3/cv2.cpython-35m-aarch64-linux-gnu.so
+```
+
