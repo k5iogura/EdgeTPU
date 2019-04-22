@@ -156,7 +156,7 @@ or
 $ objdump -p /bin/ls
 /bin/ls:     file format elf64-x86-64
 ```
-#### Select OS and Python Version for Edge TPU
+#### To select OS and Python Version for Edge TPU
 
 |OS                |File                                   |Python|edgetpu_api|Status                        |
 |-                 |-                                      |-     |-          |-                             |
@@ -189,8 +189,18 @@ HOME_URL="https://www.debian.org/"
 SUPPORT_URL="https://www.debian.org/support"
 BUG_REPORT_URL="https://bugs.debian.org/"
 ````
+- To avoid SSL:Error of pip or pip3  
+
+edit ~/.pip/pip.conf like bellow,  
+```
+[global]
+trusted-host = pypi.python.org
+               pypi.org
+               files.pythonhosted.org
+```
 
 - Install edgetpu_api according to [geting start](https://coral.withgoogle.com/docs/accelerator/get-started/)  
+
 - Run *ClassificationEngine* demo with parrot.jpg  
 ```
  $ cd ~/Downloads/
