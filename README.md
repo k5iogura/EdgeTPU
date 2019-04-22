@@ -85,6 +85,7 @@ $ objdump -p /bin/ls
 |OS                |File                                  |Python|edgetpu_api|Status                        |
 |-                 |-                                     |-     |-          |-                             |
 |bionic 18.04.2 LTS|bionic-lxde-rock64-0.8.0rc9-1120-arm64|3.6.12|19.2-py3   |cannot open shared object file|
+|Debian 9(stretch) |                                      |3.5.3 |19.2-py3   |                              |
 
 ## Edge TPU Accelerator on RaspberryPi-3 Model B+  
 
