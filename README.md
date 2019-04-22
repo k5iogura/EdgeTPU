@@ -82,9 +82,9 @@ or
 $ objdump -p /bin/ls
 /bin/ls:     file format elf64-x86-64
 ```
-|OS                |File                                  |edgetpu_api|Status                             |
-|-                 |-                                     |-          |-                                  |
-|bionic 18.04.2 LTS|bionic-lxde-rock64-0.8.0rc9-1120-arm64|19.2-py3   |cannot open shared object file     |
+|OS                |File                                  |Python|edgetpu_api|Status                        |
+|-                 |-                                     |-     |-          |-                             |
+|bionic 18.04.2 LTS|bionic-lxde-rock64-0.8.0rc9-1120-arm64|3.6.12|19.2-py3   |cannot open shared object file|
 
 ## Edge TPU Accelerator on RaspberryPi-3 Model B+  
 
@@ -95,6 +95,9 @@ $ objdump -p /bin/ls
 - Update system  
   $ apt update  
   $ apt upgrade  
+  
+- python3
+  Python 3.5.3
   
 - Install edgetpu_api according to [geting start](https://coral.withgoogle.com/docs/accelerator/get-started/)  
 - Run *ClassificationEngine* demo with parrot.jpg  
