@@ -174,7 +174,7 @@ $ objdump -p /bin/ls
 -rw-r--r--  1 root staff 1992232 Jul 21 21:36 _edgetpu_cpp_wrapper.cpython-36m-x86_64-linux-gnu.so
 -rw-r--r--  1 root staff   16554 Jul 21 21:36 edgetpu_cpp_wrapper.py
 ```
-     It seems only Python3.5 or 3.6 are supported and on aarch64 supports 3.5 only now.  
+It seems only Python3.5 or 3.6 are supported and on aarch64 supports 3.5 only now.  
   
    - lsb_release information  
    
