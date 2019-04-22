@@ -139,8 +139,8 @@ We select bellows,
 - bionic-lxde-rock64-0.8.0rc9-1120-arm64.img  
   Ubuntu 18.06 64bit build with desktop environment.  
   
-- to enable dhcp, jp106 keyboard etc.  
-  edit /etc/network/intefaces for DHCP  
+To enable dhcp, jp106 keyboard etc.  
+- edit /etc/network/intefaces for DHCP  
   ```
   auto eth0
   allow-hotplug eth0
@@ -268,4 +268,4 @@ $ ls detection_result.jpg
 ![](files/detection_results.jpg)  
 Good:smile:
 
-But opencv-python is not supported for python3 on stretch-minimal  
+But opencv-python is not supported for python3 on stretch-minimal, can not use USB Camera via /dev/video0.  
