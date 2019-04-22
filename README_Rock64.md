@@ -100,3 +100,4 @@ cam.release()
 ```
     $ python3 cam.py
 ```
+*Very Fast and Short latency* inspite of USB Camera.  
