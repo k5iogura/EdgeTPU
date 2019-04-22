@@ -235,7 +235,7 @@ $ ls detection_result.jpg
   detection_results.jpg
 ```
 
-*eog* command not work due to that X-Server is not installed on stretch-minimal distribution needs X11 environment.  
+*eog* command not work due to that X-Server is not installed on stretch-minimal distribution, needs X11 environment.  
 
 ```
     # apt install \
