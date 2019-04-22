@@ -28,6 +28,7 @@ libatlas-base-dev gfortran
 python3-dev  
 
 - build from source  
+
     $ wget -O opencv.zip https://github.com/opencv/opencv/archive/3.4.3.zip --no-check-certificate  
     $ wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/3.4.3.zip --no-check-certificate  
     
