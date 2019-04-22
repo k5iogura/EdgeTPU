@@ -101,3 +101,12 @@ cam.release()
     $ python3 cam.py
 ```
 *Very Fast and Short latency* inspite of USB Camera.  
+
+### edgetpu_api and simple Demos  
+```
+    $ cd ~/
+    $ wget https://dl.google.com/coral/edgetpu_api/edgetpu_api_latest.tar.gz -O edgetpu_api.tar.gz --trust-server-names --no-check-certificate
+    $ tar xzf edgetpu_api.tar.gz
+    $ cd edgetpu_api
+    $ bash ./install.sh
+```
