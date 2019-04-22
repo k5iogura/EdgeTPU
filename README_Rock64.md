@@ -15,11 +15,11 @@ apt install bellow,
 python3-pip python-pip  
 pip3 install setuptools  
 
-To avoid pip SSL certificate error, edit ~/.pip/pip.conf like bellow,
-[global]
-trusted-host = pypi.python.org
-               pypi.org
-               files.pythonhosted.org
+To avoid pip SSL certificate error, edit ~/.pip/pip.conf like bellow,  
+[global]  
+trusted-host = pypi.python.org  
+               pypi.org  
+               files.pythonhosted.org  
 
 - apt install for requirements  
 build-essential cmake unzip pkg-config  
