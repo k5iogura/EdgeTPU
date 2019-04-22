@@ -1,12 +1,20 @@
 # Neural Network DEMO with Rock64@Pine64 compatible RaspberryPi with USB3.0
 
-## Installation
+## Installation of Requirement packages
 
 ### OpenCV with Python3.5  
 Needs installation from source code.  
 
-First of all apt,  
+- First of all,  
+apt install bellow,  
 python3-pip python-pip  
+pip3 install setuptools  
+
+To avoid pip SSL certificate error, edit ~/.pip/pip.conf like bellow,
+[global]
+trusted-host = pypi.python.org
+               pypi.org
+               files.pythonhosted.org
 
 - requirements apt  
 build-essential cmake unzip pkg-config  
