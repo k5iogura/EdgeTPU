@@ -82,6 +82,9 @@ or
 $ objdump -p /bin/ls
 /bin/ls:     file format elf64-x86-64
 ```
+|OS                 |edgetpu_api|Status                             |
+|-                  |-          |-                                  |
+|bionic 18.04.2 LTS |19.2-py3   |cannot open shared object file     |
 
 ## Edge TPU Accelerator on RaspberryPi-3 Model B+  
 
