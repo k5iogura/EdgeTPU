@@ -85,15 +85,15 @@ $ objdump -p /bin/ls
 ```
 #### Select OS and Python Version for Edge TPU
 
-|OS                |File                                  |Python|edgetpu_api|Status                        |
-|-                 |-                                     |-     |-          |-                             |
-|bionic 18.04.2 LTS|bionic-lxde-rock64-0.8.0rc9-1120-arm64|3.6.12|19.2-py3   |cannot open shared object file|
-|Debian 9(stretch) |                                      |3.5.3 |19.2-py3   |Work good :smile:             |
+|OS                |File                                   |Python|edgetpu_api|Status                        |
+|-                 |-                                      |-     |-          |-                             |
+|bionic 18.04.2 LTS|bionic-lxde-rock64-0.8.0rc9-1120-arm64 |3.6.12|19.2-py3   |cannot open shared object file|
+|Debian 9(stretch) |stretch-minimal-rock64-0.7.8-1061-arm64|3.5.3 |19.2-py3   |Work good :smile:             |
 
 - Condition of working fine  
-  Official support OS is Debian 6 or later but not work on Ubuntu bionic.
-  I gess that Edge TPU Accelerator needs Python 3.5.xx version reason why provided *_edge_cpp_wrapper.so* only is 35m.  
-  Looking at installed directory,  
+   - Official support OS is Debian 6 or later but not work on Ubuntu bionic.
+   I gess that Edge TPU Accelerator needs Python 3.5.xx version reason why provided *_edge_cpp_wrapper.so* only is 35m.  
+   Looking at library installed directory,  
  ```
 -rw-r--r--  1 root staff 2232960 Jul 21 21:36 _edgetpu_cpp_wrapper.cpython-35m-aarch64-linux-gnu.so
 -rw-r--r--  1 root staff 2089516 Jul 21 21:36 _edgetpu_cpp_wrapper.cpython-35m-arm-linux-gnueabihf.so
@@ -101,8 +101,21 @@ $ objdump -p /bin/ls
 -rw-r--r--  1 root staff 1992232 Jul 21 21:36 _edgetpu_cpp_wrapper.cpython-36m-x86_64-linux-gnu.so
 -rw-r--r--  1 root staff   16554 Jul 21 21:36 edgetpu_cpp_wrapper.py
 ```
-  It seems only Python3.5 or 3.6 are supported and on aarch64 supports 3.5 only now.  
+   It seems only Python3.5 or 3.6 are supported and on aarch64 supports 3.5 only now.  
   
+    - lsb_release
+```
+$ cat /etc/*release*
+PRETTY_NAME="Debian GNU/Linux 9 (stretch)"
+NAME="Debian GNU/Linux"
+VERSION_ID="9"
+VERSION="9 (stretch)"
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+````
+
 ## Edge TPU Accelerator on RaspberryPi-3 Model B+  
 
 - Install OS image and boot  
