@@ -18,7 +18,7 @@ trusted-host = pypi.python.org
                pypi.org
                files.pythonhosted.org
 
-- requirements apt  
+- apt install for requirements  
 build-essential cmake unzip pkg-config  
 libjpeg-dev libpng-dev libtiff-dev  
 libavcodec-dev libavformat-dev libswscale-dev libv4l-dev  
@@ -27,8 +27,8 @@ libgtk-3-dev
 libatlas-base-dev gfortran  
 python3-dev  
 
-- build from source  
-
+- Build from source  
+```
     $ wget -O opencv.zip https://github.com/opencv/opencv/archive/3.4.3.zip --no-check-certificate  
     $ wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/3.4.3.zip --no-check-certificate  
     
@@ -47,4 +47,4 @@ python3-dev
     -D PYTHON_EXECUTABLE=/usr/bin/python3 \  
     -D BUILD_EXAMPLES=OFF ..  
     $ make j4  
-    
+```
