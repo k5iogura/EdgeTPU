@@ -1,5 +1,7 @@
 # Neural Network DEMO with Rock64@Pine64 compatible RaspberryPi with USB3.0
 
+![](files/OpeningArmbian.png)  
+
 ## Installation of Requirement packages
 
 ### OpenCV with Python3.5  
