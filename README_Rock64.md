@@ -5,7 +5,7 @@
 ## Installation of Requirement packages
 
 ### OpenCV with Python3.5  
-Needs installation from source code.  
+Needs installation from source code reason why pip3 not providing comaptible opencv-phton.  
 
 - First of all,  
 apt install bellow,  
