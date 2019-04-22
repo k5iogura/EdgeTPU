@@ -132,10 +132,15 @@ Rock64@Pine64 is ARM 64bit Hardware therefore with 64bit Debian Linux OS should 
 We select bellows,  
 - Armbian_5.75_Rock64_Debian_stretch_default_4.4.174_desktop  
   Debian 9 stretch 64bit build with desktop environment.  
-
+  
+- stretch-minimal-rock64-0.7.8-1061-arm64  
+  Debian 9 stretch minimal build without desktop environment.  
+  
 - bionic-lxde-rock64-0.8.0rc9-1120-arm64.img  
   Ubuntu 18.06 64bit build with desktop environment.  
-  - edit /etc/network/intefaces for DHCP  
+  
+- to enable dhcp, jp106 keyboard etc.  
+  edit /etc/network/intefaces for DHCP  
   ```
   auto eth0
   allow-hotplug eth0
