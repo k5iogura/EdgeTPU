@@ -119,7 +119,7 @@ detection_result is,
 
 ## Edge TPU Accelerator on Rock64@Pine64  
 
-![](http://wiki.pine64.org/index.php/File:ROCK64_sideimg.jpg)  
+![](files/ROCK64_sideimg.jpg)  
 
 - [Software download](http://wiki.pine64.org/index.php/ROCK64_Software_Release)  
 There are latest OS images supported by Rock64.  
