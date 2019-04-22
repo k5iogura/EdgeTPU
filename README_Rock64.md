@@ -11,17 +11,17 @@ Needs installation from source code reason why pip3 not providing comaptible ope
 Install bellow in SDCard by Ethcer,  
 Armbian_5.75_Rock64_Debian_stretch_default_4.4.174_desktop.img  
 
-apt install bellow,  
+- apt install bellow,  
 python3-pip python-pip  
 pip3 install setuptools  
 
-To avoid pip SSL certificate error, edit ~/.pip/pip.conf like bellow,  
+- To avoid pip SSL certificate error, edit ~/.pip/pip.conf like bellow,  
 [global]  
 trusted-host = pypi.python.org  
                pypi.org  
                files.pythonhosted.org  
 
-- apt install for requirements  
+- apt install for requirements of opencv 3.4.3  
 build-essential cmake unzip pkg-config  
 libjpeg-dev libpng-dev libtiff-dev  
 libavcodec-dev libavformat-dev libswscale-dev libv4l-dev  
