@@ -92,8 +92,8 @@ $ objdump -p /bin/ls
 
 - Condition of working fine  
    - Official support OS is Debian 6 or later but not work on Ubuntu bionic.
-   I gess that Edge TPU Accelerator needs Python 3.5.xx version reason why provided *_edge_cpp_wrapper.so* only is 35m.  
-   Looking at library installed directory,  
+     I gess that Edge TPU Accelerator needs Python 3.5.xx version reason why provided *_edge_cpp_wrapper.so* only is 35m.  
+     Looking at library installed directory,  
  ```
 -rw-r--r--  1 root staff 2232960 Jul 21 21:36 _edgetpu_cpp_wrapper.cpython-35m-aarch64-linux-gnu.so
 -rw-r--r--  1 root staff 2089516 Jul 21 21:36 _edgetpu_cpp_wrapper.cpython-35m-arm-linux-gnueabihf.so
@@ -101,9 +101,10 @@ $ objdump -p /bin/ls
 -rw-r--r--  1 root staff 1992232 Jul 21 21:36 _edgetpu_cpp_wrapper.cpython-36m-x86_64-linux-gnu.so
 -rw-r--r--  1 root staff   16554 Jul 21 21:36 edgetpu_cpp_wrapper.py
 ```
-   It seems only Python3.5 or 3.6 are supported and on aarch64 supports 3.5 only now.  
+     It seems only Python3.5 or 3.6 are supported and on aarch64 supports 3.5 only now.  
   
-    - lsb_release
+   - lsb_release  
+   
 ```
 $ cat /etc/*release*
 PRETTY_NAME="Debian GNU/Linux 9 (stretch)"
