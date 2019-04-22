@@ -83,11 +83,26 @@ or
 $ objdump -p /bin/ls
 /bin/ls:     file format elf64-x86-64
 ```
+#### Select OS and Python Version for Edge TPU
+
 |OS                |File                                  |Python|edgetpu_api|Status                        |
 |-                 |-                                     |-     |-          |-                             |
 |bionic 18.04.2 LTS|bionic-lxde-rock64-0.8.0rc9-1120-arm64|3.6.12|19.2-py3   |cannot open shared object file|
-|Debian 9(stretch) |                                      |3.5.3 |19.2-py3   |                              |
+|Debian 9(stretch) |                                      |3.5.3 |19.2-py3   |Work good :smile:             |
 
+- Condition of working fine  
+  Official support OS is Debian 6 or later but not work on Ubuntu bionic.
+  I gess that Edge TPU Accelerator needs Python 3.5.xx version reason why provided *_edge_cpp_wrapper.so* only is 35m.  
+  Looking at installed directory,  
+ ```
+-rw-r--r--  1 root staff 2232960 Jul 21 21:36 _edgetpu_cpp_wrapper.cpython-35m-aarch64-linux-gnu.so
+-rw-r--r--  1 root staff 2089516 Jul 21 21:36 _edgetpu_cpp_wrapper.cpython-35m-arm-linux-gnueabihf.so
+-rw-r--r--  1 root staff 1967728 Jul 21 21:36 _edgetpu_cpp_wrapper.cpython-35m-x86_64-linux-gnu.so
+-rw-r--r--  1 root staff 1992232 Jul 21 21:36 _edgetpu_cpp_wrapper.cpython-36m-x86_64-linux-gnu.so
+-rw-r--r--  1 root staff   16554 Jul 21 21:36 edgetpu_cpp_wrapper.py
+```
+  It seems only Python3.5 or 3.6 are supported and on aarch64 supports 3.5 only now.  
+  
 ## Edge TPU Accelerator on RaspberryPi-3 Model B+  
 
 - Install OS image and boot  
