@@ -76,3 +76,27 @@ Over 4 hours has elapsed to compile source, Hwuuh,
 ```
 Completed opencv installation for Python3  
 
+- Check UVC-Camera  
+Create cam.py script like bellow,  
+```
+import numpy as np
+import cv2
+import sys,os
+
+cam = cv2.VideoCapture(0)
+assert cam is not None
+
+while True:
+    r,f = cam.read()
+    assert r is True
+
+    cv2.imshow('camera',f)
+    if cv2.waitKey(33)!=-1:break
+
+print("finalize")
+cam.release()
+```
+
+```
+    $ python3 cam.py
+```
