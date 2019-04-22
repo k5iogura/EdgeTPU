@@ -96,8 +96,8 @@ $ objdump -p /bin/ls
   $ apt update  
   $ apt upgrade  
   
-- python3
-  Python 3.5.3
+- python3  
+  Python 3.5.3  
   
 - Install edgetpu_api according to [geting start](https://coral.withgoogle.com/docs/accelerator/get-started/)  
 - Run *ClassificationEngine* demo with parrot.jpg  
