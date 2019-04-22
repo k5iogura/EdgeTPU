@@ -62,7 +62,17 @@ Over 4 hours has elapsed to compile source, Hwuuh,
 - Check build process like bellow,  
 ```
     $ pkg-config --modversion opencv
+      3.4.3
     $ find . -iname cv2\*.so
       ./lib/python3/cv2.cpython-35m-aarch64-linux-gnu.so
+    $ python3 
+      Python 3.5.3 (default, Sep 27 2018, 17:25:39) 
+      [GCC 6.3.0 20170516] on linux
+      Type "help", "copyright", "credits" or "license" for more information.
+      >>> import cv2
+      >>> cv2.__version__
+      '3.4.3'
+      >>> 
 ```
+Completed opencv installation for Python3  
 
