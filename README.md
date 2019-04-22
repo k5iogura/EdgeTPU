@@ -24,8 +24,9 @@ It's a very easy to install Edge TPU on Debian linux system but Windows OS is no
 Notice!: Needs Internet access from host system.  
 
 ```
+# apt update
 $ cd ~/
-$ wget https://dl.google.com/coral/edgetpu_api/edgetpu_api_latest.tar.gz -O edgetpu_api.tar.gz --trust-server-names
+$ wget https://dl.google.com/coral/edgetpu_api/edgetpu_api_latest.tar.gz -O edgetpu_api.tar.gz --trust-server-names --no-check-certificate
 $ tar xzf edgetpu_api.tar.gz
 $ cd edgetpu_api
 $ bash ./install.sh
