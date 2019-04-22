@@ -235,4 +235,19 @@ $ ls detection_result.jpg
   detection_results.jpg
 ```
 
-*eog* command not work due to that X-Server is not installed on stretch-minimal distribution.  
+*eog* command not work due to that X-Server is not installed on stretch-minimal distribution needs X11 environment.  
+
+```
+    # apt install \
+    xsever-xorg-video-all \
+    x11-xserver-utils \
+    xinit \
+    xterm\
+    twm \
+    fonts-vlgothic \
+    x11-apps
+    $ eog detection_result.jpg
+```
+
+![](files/detection_results.jpg)  
+Good:smile:
