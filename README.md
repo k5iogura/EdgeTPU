@@ -119,6 +119,8 @@ detection_result is,
 
 ## Edge TPU Accelerator on Rock64@Pine64  
 
+### [Demo for Rock64](README_Rock64.md)  
+
 ![](files/ROCK64_sideimg.jpg)  
 
 - [Software download](http://wiki.pine64.org/index.php/ROCK64_Software_Release)  
@@ -132,12 +134,15 @@ Rock64@Pine64 is ARM 64bit Hardware therefore with 64bit Debian Linux OS should 
 We select bellows,  
 - Armbian_5.75_Rock64_Debian_stretch_default_4.4.174_desktop  
   Debian 9 stretch 64bit build with desktop environment.  
+  Default root/pass = root/1234
   
 - stretch-minimal-rock64-0.7.8-1061-arm64  
   Debian 9 stretch minimal build without desktop environment.  
+  Default root/pass = rock64/rock64
   
 - bionic-lxde-rock64-0.8.0rc9-1120-arm64.img  
   Ubuntu 18.06 64bit build with desktop environment.  
+  Default root/pass = rock64/rock64
   
 To enable dhcp, jp106 keyboard etc.  
 - edit /etc/network/intefaces for DHCP  
@@ -163,12 +168,13 @@ or
 $ objdump -p /bin/ls
 /bin/ls:     file format elf64-x86-64
 ```
-#### To select OS and Python Version for Edge TPU
+#### To status of installation via OS and Python Version for Edge TPU
 
-|OS                |File                                   |Python|edgetpu_api|Status                        |
+|OS                |File                                   |Python|edgetpu_api|Edge TPU Status               |
 |-                 |-                                      |-     |-          |-                             |
 |bionic 18.04.2 LTS|bionic-lxde-rock64-0.8.0rc9-1120-arm64 |3.6.12|19.2-py3   |cannot open shared object file|
 |Debian 9(stretch) |stretch-minimal-rock64-0.7.8-1061-arm64|3.5.3 |19.2-py3   |Work good :smile:             |
+|Debian 9(stretch) |Armbian_5.75_Rock64_Debian_stretch_default_4.4.174_desktop|3.5.3 |19.2-py3   |             |
 
 - Condition of working fine  
    - Official support OS is Debian 6 or later but not work on Ubuntu bionic.
