@@ -2,7 +2,7 @@
 
 ![](files/OpeningArmbian.png)  
 
-## Installation of Requirement packages
+## Installation of Packages for Demo
 
 ### OpenCV with Python3.5  
 Needs installation from source code reason why pip3 not providing comaptible opencv-phton.  
@@ -135,7 +135,7 @@ is lower than expected (10).
  ```
 Work fine.  
 
-### Object Detection with ssd_mobilenet
+## Object Detection Demo with ssd_mobilenet
 
 - Demo script  
   Use object_detection.py **in this repo**.  
