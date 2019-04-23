@@ -104,7 +104,7 @@ Over 4 hours has elapsed to compile source, Hwuuh,
 
   *Very Fast and Short latency* inspite of USB Camera.  
 
-### edgetpu_api and simple Demos  
+### Install edgetpu_api and simple Demos  
 
 - Install edgetpu_api.  
 
