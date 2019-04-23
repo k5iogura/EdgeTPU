@@ -176,3 +176,4 @@ $ python3 object_detection.py \
   --input face.jpg \
   --output person_result.jpg
 ```
+![](rock64/person_result.jpg)  
