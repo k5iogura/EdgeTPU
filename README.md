@@ -158,28 +158,26 @@ OS image *stretch-minimal* bases on Debian 9 stretch without desktop environment
 
 To enable dhcp, jp106 keyboard etc.  
 - edit /etc/network/intefaces for DHCP if need.  
-  ```
+ ```
   auto eth0
   allow-hotplug eth0
   iface eth0 inet dhcp
-  ```
+ ```
 - Edit /etc/default/keyboard for jp.  
-  ```
+ ```
   XKBMODEL="jp106"
   XKBLAYOUT="jp"
-  ```
+ ```
 
 - How to check OS bit,  
-  ```
+ ```
   $ file /bin/ls
   /bin/ls: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l,
   for GNU/Linux 2.6.32, BuildID[sha1]=d0bc0fb9b3f60f72bbad3c5a1d24c9e2a1fde775, stripped
-
-  or 
-
+     or 
   $ objdump -p /bin/ls
   /bin/ls:     file format elf64-x86-64
-```
+ ```
 
 - Modify Destribution Environment  
    - Official support OS is Debian 6 or later but not work on Ubuntu bionic.
