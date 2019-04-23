@@ -1,4 +1,4 @@
-# Neural Network DEMO with Rock64@Pine64 compatible RaspberryPi with USB3.0
+# Neural Network DEMO with Rock64@Pine64 aarch64 OS and USB3.0
 
 ![](files/OpeningArmbian.png)  
 
