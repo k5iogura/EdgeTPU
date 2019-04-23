@@ -176,4 +176,5 @@ $ python3 object_detection.py \
   --input face.jpg \
   --output person_result.jpg
 ```
+*person_result.jpg* via MobileNet SSD v2.  
 ![](rock64/person_result.jpg)  
