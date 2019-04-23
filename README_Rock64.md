@@ -139,7 +139,8 @@ Work fine.
 
 - Demo script  
   Use object_detection.py **in this repo**.  
-  
+  Looking at sample script object_detection.py EdgeTPU is in not only prediction but also a part of postprocess. Therefore only overlaying bounding boxes on image is user task.  
+
 - Test image  
 ```
 $ wget --no-check-certificate https://coral.withgoogle.com/static/images/face.jpg
