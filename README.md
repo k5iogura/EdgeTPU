@@ -259,7 +259,7 @@ $ ls detection_result.jpg
   detection_results.jpg
 ```
 
-- Intall *eog* command.  
+- Install *eog* command.  
 
 ```
     # apt install eog \
