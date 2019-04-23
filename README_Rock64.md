@@ -20,10 +20,12 @@ pip3 install setuptools
 3.5.3
 
 - To avoid pip SSL certificate error, edit ~/.pip/pip.conf like bellow,  
+```
 [global]  
 trusted-host = pypi.python.org  
                pypi.org  
                files.pythonhosted.org  
+```
 
 - apt install for requirements of opencv 3.4.3  
 build-essential cmake unzip pkg-config  
@@ -74,39 +76,61 @@ Over 4 hours has elapsed to compile source, Hwuuh,
       '3.4.3'
       >>> 
 ```
-Completed opencv installation for Python3  
+  Completed opencv installation for Python3  
 
-- Check UVC-Camera  
-Create cam.py script like bellow,  
-```
-import numpy as np
-import cv2
-import sys,os
+- Check UVC Camera  
+  Create cam.py script like bellow,  
 
-cam = cv2.VideoCapture(0)
-assert cam is not None
-
-while True:
+  ```
+  import numpy as np
+  import cv2
+  import sys,os
+  cam = cv2.VideoCapture(0)
+  assert cam is not None
+  while True:
     r,f = cam.read()
     assert r is True
 
     cv2.imshow('camera',f)
     if cv2.waitKey(33)!=-1:break
 
-print("finalize")
-cam.release()
-```
+  print("finalize")
+  cam.release()
+  ```
 
-```
-    $ python3 cam.py
-```
-*Very Fast and Short latency* inspite of USB Camera.  
+  ```
+  $ python3 cam.py
+  ```
+
+  *Very Fast and Short latency* inspite of USB Camera.  
 
 ### edgetpu_api and simple Demos  
-```
+
+- Install edgetpu_api.  
+
+ ```
     $ cd ~/
-    $ wget https://dl.google.com/coral/edgetpu_api/edgetpu_api_latest.tar.gz -O edgetpu_api.tar.gz --trust-server-names --no-check-certificate
+    $ wget https://dl.google.com/coral/edgetpu_api/edgetpu_api_latest.tar.gz \
+      -O edgetpu_api.tar.gz --trust-server-names --no-check-certificate
     $ tar xzf edgetpu_api.tar.gz
     $ cd edgetpu_api
     $ bash ./install.sh
-```
+ ```
+ 
+- Run *ClassificationEngine* demo  
+
+ ```
+ $ cd ~/Downloads/
+ $ wget https://storage.googleapis.com/cloud-iot-edge-pretrained-models/canned_models/mobilenet_v2_1.0_224_inat_bird_quant_edgetpu.tflite \
+    http://storage.googleapis.com/cloud-iot-edge-pretrained-models/canned_models/inat_bird_labels.txt \
+    https://coral.withgoogle.com/static/images/parrot.jpg  --no-check-certificate
+ $ cd /usr/local/lib/python3.5/dist-packages/edgetpu/demo
+ $ python3 classify_image.py --model ~/Downloads/mobilenet_v2_1.0_224_inat_bird_quant_edgetpu.tflite \
+--label ~/Downloads/inat_bird_labels.txt --image ~/Downloads/parrot.jpg
+W0721 22:20:01.232883    3945 package_registry.cc:65] Minimum runtime version required by package (5)
+is lower than expected (10).
+ ---------------------------
+ Ara macao (Scarlet Macaw)
+ Score :  0.761719
+ ```
+Work fine.  

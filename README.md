@@ -54,7 +54,7 @@ According to [Python API](https://coral.withgoogle.com/docs/edgetpu/api-intro/) 
   $ apt update  
   $ apt upgrade  
   
-- python3  
+- Check python3 --version  
   Python 3.5.3  
   
 - Install edgetpu_api according to [geting start](https://coral.withgoogle.com/docs/accelerator/get-started/)  
@@ -131,7 +131,7 @@ There are archives of OS historical images.
 
 Rock64@Pine64 is ARM 64bit Hardware therefore with 64bit Debian Linux OS should be selected.  
 
-We select bellows,  
+We tried some OS bellows,  
 - Armbian_5.75_Rock64_Debian_stretch_default_4.4.174_desktop  
   Debian 9 stretch 64bit build with desktop environment.  
   Default root/pass = root/1234
@@ -144,42 +144,47 @@ We select bellows,
   Ubuntu 18.06 64bit build with desktop environment.  
   Default root/pass = rock64/rock64
   
+#### Summary of installation of Edge TPU Accelerator
+
+|OS                |File                                   |Python|edgetpu_api|Edge TPU Status               |
+|-                 |-                                      |-     |-          |-                             |
+|bionic 18.04.2 LTS|bionic-lxde-rock64-0.8.0rc9-1120-arm64 |3.6.12|19.2-py3   |cannot open shared object file|
+|Debian 9(stretch) |stretch-minimal-rock64-0.7.8-1061-arm64|3.5.3 |19.2-py3   |Work file :smile:             |
+|Debian 9(stretch) |Armbian_5.75_Rock64_Debian_stretch_default_4.4.174_desktop|3.5.3 |19.2-py3   |Work file :smile:             |
+
+#### Using stretch-minimal-rock64-0.7.8-1061-arm64  
+
+OS image *stretch-minimal* bases on Debian 9 stretch without desktop environment.  
+
 To enable dhcp, jp106 keyboard etc.  
-- edit /etc/network/intefaces for DHCP  
+- edit /etc/network/intefaces for DHCP if need.  
   ```
   auto eth0
   allow-hotplug eth0
   iface eth0 inet dhcp
   ```
-  - Edit /etc/default/keyboard for jp.  
+- Edit /etc/default/keyboard for jp.  
   ```
   XKBMODEL="jp106"
   XKBLAYOUT="jp"
   ```
 
-How to check OS bit,  
+- How to check OS bit,  
+  ```
+  $ file /bin/ls
+  /bin/ls: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l,
+  for GNU/Linux 2.6.32, BuildID[sha1]=d0bc0fb9b3f60f72bbad3c5a1d24c9e2a1fde775, stripped
+
+  or 
+
+  $ objdump -p /bin/ls
+  /bin/ls:     file format elf64-x86-64
 ```
-$ file /bin/ls
-/bin/ls: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l,
-for GNU/Linux 2.6.32, BuildID[sha1]=d0bc0fb9b3f60f72bbad3c5a1d24c9e2a1fde775, stripped
 
-or 
-
-$ objdump -p /bin/ls
-/bin/ls:     file format elf64-x86-64
-```
-#### To status of installation via OS and Python Version for Edge TPU
-
-|OS                |File                                   |Python|edgetpu_api|Edge TPU Status               |
-|-                 |-                                      |-     |-          |-                             |
-|bionic 18.04.2 LTS|bionic-lxde-rock64-0.8.0rc9-1120-arm64 |3.6.12|19.2-py3   |cannot open shared object file|
-|Debian 9(stretch) |stretch-minimal-rock64-0.7.8-1061-arm64|3.5.3 |19.2-py3   |Work good :smile:             |
-|Debian 9(stretch) |Armbian_5.75_Rock64_Debian_stretch_default_4.4.174_desktop|3.5.3 |19.2-py3   |             |
-
-- Condition of working fine  
+- Modify Destribution Environment  
    - Official support OS is Debian 6 or later but not work on Ubuntu bionic.
      I gess that Edge TPU Accelerator needs Python 3.5.xx version reason why provided *_edge_cpp_wrapper.so* only is 35m.  
-     Looking at library installed directory,  
+     Look at installed edgetpu library /usr/local/lib/python3.5/dist-packages/edgetpu/swig directory,  
  ```
 -rw-r--r--  1 root staff 2232960 Jul 21 21:36 _edgetpu_cpp_wrapper.cpython-35m-aarch64-linux-gnu.so
 -rw-r--r--  1 root staff 2089516 Jul 21 21:36 _edgetpu_cpp_wrapper.cpython-35m-arm-linux-gnueabihf.so
@@ -190,8 +195,7 @@ $ objdump -p /bin/ls
 It seems only Python3.5 or 3.6 are supported and on aarch64 supports 3.5 only now.  
   
    - lsb_release information  
-   
-```
+ ```
 $ cat /etc/*release*
 PRETTY_NAME="Debian GNU/Linux 9 (stretch)"
 NAME="Debian GNU/Linux"
@@ -201,9 +205,8 @@ ID=debian
 HOME_URL="https://www.debian.org/"
 SUPPORT_URL="https://www.debian.org/support"
 BUG_REPORT_URL="https://bugs.debian.org/"
-````
-- To avoid SSL:Error of pip or pip3  
-
+ ```
+   - To avoid SSL:Error of pip or pip3  
 edit ~/.pip/pip.conf like bellow,  
 ```
 [global]
@@ -215,6 +218,7 @@ trusted-host = pypi.python.org
 - Install edgetpu_api according to [geting start](https://coral.withgoogle.com/docs/accelerator/get-started/)  
 
 - Run *ClassificationEngine* demo with parrot.jpg  
+
 ```
  $ cd ~/Downloads/
  $ wget https://storage.googleapis.com/cloud-iot-edge-pretrained-models/canned_models/mobilenet_v2_1.0_224_inat_bird_quant_edgetpu.tflite \
@@ -257,10 +261,10 @@ $ ls detection_result.jpg
   detection_results.jpg
 ```
 
-*eog* command not work due to that X-Server is not installed on stretch-minimal distribution, needs X11 environment.  
+- Intall *eog* command.  
 
 ```
-    # apt install \
+    # apt install eog \
     xsever-xorg-video-all \
     x11-xserver-utils \
     xinit \
@@ -274,4 +278,8 @@ $ ls detection_result.jpg
 ![](files/detection_results.jpg)  
 Good:smile:
 
-But opencv-python is not supported for python3 on stretch-minimal, can not use USB Camera via /dev/video0.  
+I need to install OpenCV from source code because opencv-python package is not supported for python3 on stretch-minimal, can not use USB Camera via /dev/video0. Refer to [Demo for Rock64](README_Rock64.md)  
+
+#### [Using Armbian_5.75_Rock64_Debian_stretch_default_4.4.174_desktop](README_Rock64.md)  
+
+For Camera Demo i use Armbian stretch because it bases on Debian 9, has python3.5.3 with Desktop environment.  
