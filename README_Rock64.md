@@ -134,3 +134,45 @@ is lower than expected (10).
  Score :  0.761719
  ```
 Work fine.  
+
+### Object Detection with ssd_mobilenet
+
+- Demo script  
+  Use object_detection.py **in this repo**.  
+  
+- Test image  
+```
+$ wget --no-check-certificate https://coral.withgoogle.com/static/images/face.jpg
+```
+- MobileNet SSD v1 (COCO) model and label  
+Detects the location of 90 types objects  
+Dataset: COCO  
+Input size: 300x300  
+
+```
+$ mkdir ~/ssd_mobilenet_v1; cd ~/ssd_mobilenet_v1
+
+$ wget --no-check-certificate http://storage.googleapis.com/cloud-iot-edge-pretrained-models/canned_models/mobilenet_ssd_v1_coco_quant_postprocess_edgetpu.tflite
+$ wget --no-check-certificate http://storage.googleapis.com/cloud-iot-edge-pretrained-models/canned_models/coco_labels.txt
+
+$ python3 object_detection.py \
+  --model mobilenet_ssd_v1_coco_quant_postprocess_edgetpu.tflite \
+  --label coco_labels.txt \
+  --input face.jpg \
+  --output person_result.jpg
+```
+
+- MobileNet SSD v2 (COCO) model and label  
+
+```
+$ mkdir ~/ssd_mobilenet_v2; cd ~/ssd_mobilenet_v2
+
+$ wget --no-check-certificate http://storage.googleapis.com/cloud-iot-edge-pretrained-models/canned_models/mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite
+$ wget --no-check-certificate http://storage.googleapis.com/cloud-iot-edge-pretrained-models/canned_models/coco_labels.txt
+
+$ python3 object_detection.py \
+  --model mobilenet_ssd_v1_coco_quant_postprocess_edgetpu.tflite \
+  --label coco_labels.txt \
+  --input face.jpg \
+  --output person_result.jpg
+```
