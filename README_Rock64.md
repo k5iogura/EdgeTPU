@@ -135,7 +135,7 @@ is lower than expected (10).
  ```
 Work fine.  
 
-## Object Detection Demo with ssd_mobilenet
+## Object Detection a image-file Demo with ssd_mobilenet
 
 - Demo script  
   Use object_detection.py **in this repo**.  
@@ -179,3 +179,5 @@ $ python3 object_detection.py \
 ```
 *person_result.jpg* via MobileNet SSD v2.  
 ![](rock64/person_result.jpg)  
+
+## Object Detection via UVC Camera with ssd_mobilenet  
