@@ -126,7 +126,7 @@ detection_result is,
   $ python3 RaspberryPi/demo_csi_ssd_mobilenet.py
 ```
 
-- [How to start Demo at immediately after starting X-Window session](https://github.com/k5iogura/ncsdk_v2/Raspbian_StartDemo.md)  
+- [How to start Demo at immediately after starting X-Window session](https://github.com/k5iogura/ncsdk_v2/blob/master/Raspbian_StartDemo.md)  
 
 
 ## Edge TPU Accelerator on Rock64@Pine64  
