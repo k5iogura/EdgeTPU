@@ -299,7 +299,7 @@ For Camera Demo i use Armbian stretch because it bases on Debian 9, has python3.
 
 ## Performance Report  
 
-Comparison Edge TPU via USB-2.0 with RaspberryPi ModelB+ and via USB-3.0 with Rock64.  
+Comparison of Edge TPU via USB-2.0 with RaspberryPi ModelB+ versus via USB-3.0 with Rock64.  
 
 |SBC                |OS                    |TPU via USB|CameraIF|FPS |
 |-                  |-                     |:-         |-       |:-  |
