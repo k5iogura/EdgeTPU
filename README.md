@@ -303,5 +303,5 @@ Comparison Edge TPU via USB-2.0 with RaspberryPi ModelB+ and via USB-3.0 with Ro
 
 |SBC                |OS                    |TPU via USB|CameraIF|FPS |
 |-                  |-                     |:-         |-       |:-  |
-|RaspberryPi ModelB+|32bit Raspbian Stretch|2.0        |CSI     |8   |
+|RaspberryPi ModelB+|32bit Raspbian Stretch|2.0        |CSI     |10  |
 |Rock64             |64bit Armbian Stretch |3.0        |USB     |22  |
