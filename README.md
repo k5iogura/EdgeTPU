@@ -296,3 +296,12 @@ I need to install OpenCV from source code because opencv-python package is not s
 #### [Using Armbian_5.75_Rock64_Debian_stretch_default_4.4.174_desktop](README_Rock64.md)  
 
 For Camera Demo i use Armbian stretch because it bases on Debian 9, has python3.5.3 with Desktop environment.  
+
+## Performance Report  
+
+Comparison Edge TPU via USB-2.0 with RaspberryPi ModelB+ and via USB-3.0 with Rock64.  
+
+|SBC                |OS                    |TPU via USB|CameraIF|FPS |
+|-                  |-                     |-          |-       |-   |
+|RaspberryPi ModelB+|32bit Raspbian Stretch|2.0        |CSI     |8   |
+|Rock64             |64bit Armbian Stretch |3.0        |USB     |8   |
