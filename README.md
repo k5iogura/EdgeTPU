@@ -117,6 +117,18 @@ feh : feh/stable,now 2.18-2 armhf imlib2 based image viewer
 detection_result is,  
 ![](files/detection_results.jpg)  
 
+#### Demo via csi-camera  
+
+- [Setup MIPI-CSI Camera on RaspberryPI-3](https://github.com/k5iogura/ncsdk_v2/RaspberryPi_CSI.md)  
+
+- Test Demo script like bellow,  
+```
+  $ python3 RaspberryPi/demo_csi_ssd_mobilenet.py
+```
+
+- [How to start Demo at immediately after starting X-Window session](https://github.com/k5iogura/ncsdk_v2/Raspbian_StartDemo.md)  
+
+
 ## Edge TPU Accelerator on Rock64@Pine64  
 
 ### [Demo for Rock64](README_Rock64.md)  

@@ -183,5 +183,5 @@ $ python3 object_detection.py \
 ## Object Detection via UVC Camera with ssd_mobilenet  
 Connect UVC Camera via USB 2.0 port and Edge TPU Accelerator via USB 3.0.  
 
-    $ python3 demo_uvc_ssd_mobilenet.py  
+    $ python3 rock64/demo_uvc_ssd_mobilenet.py  
     
