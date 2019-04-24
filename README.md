@@ -119,7 +119,7 @@ detection_result is,
 
 #### Demo via csi-camera  
 
-- [Setup MIPI-CSI Camera on RaspberryPI-3](https://github.com/k5iogura/ncsdk_v2/RaspberryPi_CSI.md)  
+- [Setup MIPI-CSI Camera on RaspberryPI-3](https://github.com/k5iogura/ncsdk_v2/blob/master/RaspberryPi_CSI.md)  
 
 - Test Demo script like bellow,  
 ```
