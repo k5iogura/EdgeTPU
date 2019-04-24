@@ -1,5 +1,7 @@
 # Estimation of Google Edge TPU Accelerator
 
+![](files/edgetpu.jpg)
+
 Estimates Edge TPU performace on some linux system such as RaspberryPi, [Rock64@Pine64](https://www.pine64.org/?product=rock64-media-board-computer) etc.  
 
 As of now, Raspbian OS bases on Ubuntu Xenial(16.04 LTS) build as 32bit OS.  
