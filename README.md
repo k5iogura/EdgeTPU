@@ -121,7 +121,7 @@ detection_result is,
 
 - [Setup MIPI-CSI Camera on RaspberryPI-3](https://github.com/k5iogura/ncsdk_v2/blob/master/RaspberryPi_CSI.md)  
 
-- Test Demo script like bellow,  
+- Test COCO Object Detection Demo script like bellow,  
 ```
   $ python3 RaspberryPi/demo_csi_ssd_mobilenet.py
 ```
