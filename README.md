@@ -121,14 +121,15 @@ detection_result is,
 
 #### Demo via csi-camera  
 
-- [Setup MIPI-CSI Camera on RaspberryPI-3](https://github.com/k5iogura/ncsdk_v2/RaspberryPi_CSI.md)  
+- [Setup MIPI-CSI Camera on RaspberryPI-3](https://github.com/k5iogura/ncsdk_v2/blob/master/RaspberryPi_CSI.md)  
 
-- Test Demo script like bellow,  
+- Test COCO Object Detection Demo script like bellow,  
 ```
-  $ python3 RaspberryPi/demo_csi_ssd_mobilenet.py
+  $ cd RaspberryPi
+  $ python3 demo_csi_ssd_mobilenet.py
 ```
 
-- [How to start Demo at immediately after starting X-Window session](https://github.com/k5iogura/ncsdk_v2/Raspbian_StartDemo.md)  
+- [How to start Demo at immediately after starting X-Window session](https://github.com/k5iogura/ncsdk_v2/blob/master/Raspbian_StartDemo.md)  
 
 
 ## Edge TPU Accelerator on Rock64@Pine64  
