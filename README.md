@@ -123,7 +123,8 @@ detection_result is,
 
 - Test COCO Object Detection Demo script like bellow,  
 ```
-  $ python3 RaspberryPi/demo_csi_ssd_mobilenet.py
+  $ cd RaspberryPi
+  $ python3 demo_csi_ssd_mobilenet.py
 ```
 
 - [How to start Demo at immediately after starting X-Window session](https://github.com/k5iogura/ncsdk_v2/blob/master/Raspbian_StartDemo.md)  
