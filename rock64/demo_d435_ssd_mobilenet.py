@@ -67,6 +67,7 @@ def main():
       '--output', help='File path of the output image.')
   parser.add_argument(
       '--threshold', type=float, default=0.45, help='Threshold for DetectionEngine')
+  parser.add_argument( '-uvc', '--uvc',      action='store_true')
   parser.add_argument( '-crw', '--camera_w', type=int, default=320, help='camera resolution')
   parser.add_argument( '-crh', '--camera_h', type=int, default=240, help='camera resolution')
   parser.add_argument( '-rww', '--resize_w', type=int, default=592, help='resize view windows')
@@ -80,26 +81,29 @@ def main():
   # Open image.
   #img = Image.open(args.input)
   #draw = ImageDraw.Draw(img)
-  #cam = cv2.VideoCapture(0)
-  #assert cam is not None
-  cam = D435()
-  print("Opened UVC-Camera via /dev/video0")
-  #cam.set(cv2.CAP_PROP_FPS,30)
-  #cam.set(cv2.CAP_PROP_FRAME_WIDTH,args.camera_w)
-  #cam.set(cv2.CAP_PROP_FRAME_HEIGHT,args.camera_h)
+  if args.uvc:
+      cam = cv2.VideoCapture(0)
+      assert cam is not None
+      print("Opened UVC-Camera via /dev/video0")
+      cam.set(cv2.CAP_PROP_FPS,30)
+      cam.set(cv2.CAP_PROP_FRAME_WIDTH,args.camera_w)
+      cam.set(cv2.CAP_PROP_FRAME_HEIGHT,args.camera_h)
+  else:
+      cam = D435()
 
   start = time()
   img_count=0
+  ratio_w = args.resize_w/args.camera_w
+  ratio_h = args.resize_h/args.camera_h
   while True:
-      #r, Img = cam.read()
-      #assert r is True
-      #img = cv2.cvtColor(Img, cv2.COLOR_BGR2RGB)
-      #img = Image.fromarray(np.uint8(img))
-      Img, dpth = cam.read()
-      img = cv2.resize(Img,(320,240))
-      #print(img.shape, img[:10])
-      #break
-      img = Image.fromarray(np.uint8(img))
+      if args.uvc:
+          r, Img_org = cam.read()
+          assert r is True
+          Img = cv2.cvtColor(Img_org, cv2.COLOR_BGR2RGB)
+      else:
+          Img_org, dpth = cam.read()
+          Img = cv2.resize(Img_org,(args.camera_w,args.camera_h))
+      img = Image.fromarray(np.uint8(Img))
       draw = ImageDraw.Draw(img)
 
       # Run inference.
@@ -114,13 +118,18 @@ def main():
         for obj in ans:
           box = obj.bounding_box.flatten()
           box = np.asarray(box,dtype=np.int)
-          Img = cv2.rectangle(Img,(box[0],box[1]),(box[2],box[3]),(255,255,255),2)
-        Img = cv2.resize(Img,(args.resize_w, args.resize_h))
-      cv2.imshow('demo',Img)
+          rect_lt = (int( ratio_w * box[0] ), int( ratio_h * box[1] ))
+          rect_rb = (int( ratio_w * box[2] ), int( ratio_h * box[3] ))
+          Img = cv2.rectangle(Img_org, rect_lt, rect_rb, (255,255,255), 2)
+      cv2.imshow('demo',Img_org)
       key=cv2.waitKey(1)
       if key==27: break
       continue
-  cam.close()
+
+  if args.uvc:
+      cam.release()
+  else:
+      cam.close()
 
 if __name__ == '__main__':
   main()
