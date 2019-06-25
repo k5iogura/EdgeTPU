@@ -35,7 +35,7 @@ class D435:
             depth_frame = align_frame.get_depth_frame()
         return color_frame, depth_frame
 
-    def close(self):
+    def release(self):
         self.pipeline.stop()
 
 # Function to read labels from text files.
@@ -111,15 +111,18 @@ def main():
       during = (time()-start)
       img_count+=1
       sys.stdout.write('\b'*20)
-      sys.stdout.write("%.3fFPS"%(img_count/during))
+      sys.stdout.write("%.3fFPS %dobjects"%(img_count/during, len(ans)))
       sys.stdout.flush()
       if ans:
         for obj in ans:
+          txt = labels[obj.label_id]
           box = obj.bounding_box.flatten()
           box = np.asarray(box,dtype=np.int)
           rect_lt = (int( ratio_w * box[0] ), int( ratio_h * box[1] ))
           rect_rb = (int( ratio_w * box[2] ), int( ratio_h * box[3] ))
+          rect_xy = (int(rect_lt[0]+(rect_rb[0] - rect_lt[0])/2),int(rect_lt[1]+(rect_rb[1] - rect_lt[1])/2))
           Img = cv2.rectangle(Img_org, rect_lt, rect_rb, (255,255,255), 2)
+          cv2.putText(Img, txt, rect_xy, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
       cv2.imshow('demo',Img_org)
       key=cv2.waitKey(1)
       if key==27: break
@@ -127,10 +130,7 @@ def main():
 
   print("\nfin")
   cv2.destroyAllWindows()
-  if args.uvc:
-      cam.release()
-  else:
-      cam.close()
+  cam.release()
 
 if __name__ == '__main__':
   main()
