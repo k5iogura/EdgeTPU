@@ -71,8 +71,8 @@ def main():
   parser.add_argument( '-uvc', '--uvc',      action='store_true')
   parser.add_argument( '-crw', '--NN_w',     type=int, default=320, help='NeuralNet in-width size')
   parser.add_argument( '-crh', '--NN_h',     type=int, default=240, help='NeuralNet in-height size')
-  parser.add_argument( '-rww', '--resize_w', type=int, default=592, help='resize view windows width')
-  parser.add_argument( '-rwh', '--resize_h', type=int, default=432, help='resize view windows height')
+  parser.add_argument( '-rww', '--resize_w', type=int, default=640, help='resize view windows width')
+  parser.add_argument( '-rwh', '--resize_h', type=int, default=480, help='resize view windows height')
   args = parser.parse_args()
 
   engine = DetectionEngine(args.model)
