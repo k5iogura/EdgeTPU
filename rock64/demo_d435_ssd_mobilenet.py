@@ -109,7 +109,7 @@ def main():
           Img_org, dth, dth_np = cam.read()
           Img = cv2.resize(Img_org,(args.NN_w,args.NN_h))
       img = Image.fromarray(np.uint8(Img))
-      draw = ImageDraw.Draw(img)
+      #draw = ImageDraw.Draw(img)
 
       # Run inference.
       ans = engine.DetectWithImage(img, threshold=args.threshold, keep_aspect_ratio=True,
@@ -131,12 +131,12 @@ def main():
                 if not args.object_center:
                     dth_obj= dth_np[rect_lt[1]:rect_rb[1], rect_lt[0]:rect_rb[0]]*cam.scale
                     dth_obj[dth_obj<=0] = 1e3
-                    meters = dth_obj.min()                              # show nearest point in bbox
+                    meters = dth_obj.min()                             # show nearest point in bbox
                 else:
                     meters = dth.get_distance(rect_xy[1], rect_xy[0])  # show center of bbox
                 txt    = txt + " %.2fm"%(meters)
-            Img = cv2.rectangle(Img_org, rect_lt, rect_rb, (255,255,255), 2)
-            cv2.putText(Img, txt, rect_xy, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
+            cv2.rectangle(Img_org, rect_lt, rect_rb, (255,255,255), 2)
+            cv2.putText(Img_org, txt, rect_xy, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
       cv2.imshow('demo',Img_org)
       key=cv2.waitKey(1)
       if key==27: break
