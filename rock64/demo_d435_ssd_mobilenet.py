@@ -135,19 +135,21 @@ def main():
                     dth_obj_m= dth_np[rect_lt[1]:rect_rb[1], rect_lt[0]:rect_rb[0]]*cam.scale
                     #dth_obj_m[dth_obj<=0] = 1e3
                     #meters = dth_obj_m.min()                             # show nearest point in bbox
-                    dth_obj_m = np.clip(dth_obj_m, 0.001, 20.000)         # histogram of meter wise until 20m
-                    bins, range_m = np.histogram(dth_obj_m, bins=20)
+                    dth_obj_m = np.clip(dth_obj_m, 0.001, 10.000)         # histogram of meter wise until 20m
+                    bins, range_m = np.histogram(dth_obj_m, bins=10)
                     index_floor = np.argmax(bins)                         # range which occupy most area in bbox
                     range_floor = range_m[index_floor]
                     #meters = dth_obj_m[ dth_obj_m>range_floor ].min()     # nearest point in the range
                     range_ceil  = range_m[index_floor+1]
                     indexXY = np.where((dth_obj_m>range_floor) & (dth_obj_m<range_ceil))
-                    assert len(indexXY[0]) > 0 and len(indexXY[1]) > 0
+                    if len(indexXY[0]) == 0 and len(indexXY[1]) == 0:continue
                     meters  = dth_obj_m[indexXY].min()
+                    indexXY = (indexXY[0]+rect_lt[1], indexXY[1]+rect_lt[0])
+                    Img_org[indexXY[0], indexXY[1], 2] = 128
                 else:
                     meters = dth.get_distance(rect_xy[1], rect_xy[0])  # show center of bbox
                 txt    = txt + " %.2fm"%(meters)
-            cv2.rectangle(Img_org, rect_lt, rect_rb, (255,255,255), 2)
+            #cv2.rectangle(Img_org, rect_lt, rect_rb, (255,255,255), 2)
             cv2.putText(Img_org, txt, rect_xy, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
       cv2.imshow('demo',Img_org)
       key=cv2.waitKey(1)
