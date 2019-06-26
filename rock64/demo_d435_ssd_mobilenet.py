@@ -10,7 +10,7 @@ from pdb import *
 import sys, os
 import cv2
 import numpy as np
-from time import time
+from time import time, sleep
 from pdb import *
 
 class D435:
@@ -41,7 +41,9 @@ class D435:
         return color_frame, depth_frame, depth_array
 
     def release(self):
+        sleep(1)
         self.pipeline.stop()
+        sleep(1)
 
 # Function to read labels from text files.
 def ReadLabelFile(file_path):
@@ -135,8 +137,13 @@ def main():
                     #meters = dth_obj_m.min()                             # show nearest point in bbox
                     dth_obj_m = np.clip(dth_obj_m, 0.001, 20.000)         # histogram of meter wise until 20m
                     bins, range_m = np.histogram(dth_obj_m, bins=20)
-                    range_floor = range_m[np.argmax(bins)]                # range which occupy most area in bbox
-                    meters = dth_obj_m[ dth_obj_m>range_floor ].min()     # nearest point in the range
+                    index_floor = np.argmax(bins)                         # range which occupy most area in bbox
+                    range_floor = range_m[index_floor]
+                    #meters = dth_obj_m[ dth_obj_m>range_floor ].min()     # nearest point in the range
+                    range_ceil  = range_m[index_floor+1]
+                    indexXY = np.where((dth_obj_m>range_floor) & (dth_obj_m<range_ceil))
+                    assert len(indexXY[0]) > 0 and len(indexXY[1]) > 0
+                    meters  = dth_obj_m[indexXY].min()
                 else:
                     meters = dth.get_distance(rect_xy[1], rect_xy[0])  # show center of bbox
                 txt    = txt + " %.2fm"%(meters)
