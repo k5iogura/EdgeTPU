@@ -23,7 +23,9 @@ class D435:
         self.align    = rs.align(self.align_to)
         if color: config.enable_stream(rs.stream.color, w, h, rs.format.bgr8, fps)
         if depth: config.enable_stream(rs.stream.depth, w, h, rs.format.z16,  fps)
-        self.pipeline.start(config)
+        profile = self.pipeline.start(config)
+        self.scale    = profile.get_device().first_depth_sensor().get_depth_scale()
+        print("depth_sensor_scale:",self.scale)
 
     def read(self):
         color_frame = depth_frame = None
@@ -33,8 +35,10 @@ class D435:
             color_frame = align_frame.get_color_frame()
             color_frame = np.asanyarray(color_frame.get_data())
         if self.depth:
-            depth_frame = align_frame.get_depth_frame().as_depth_frame()
-        return color_frame, depth_frame
+            depth_frame = align_frame.get_depth_frame()
+            depth_frame1= depth_frame.as_depth_frame()
+            depth_array = np.asanyarray(depth_frame.get_data())
+        return color_frame, depth_frame, depth_array
 
     def release(self):
         self.pipeline.stop()
@@ -70,6 +74,7 @@ def main():
       '--threshold', type=float, default=0.45, help='Threshold for DetectionEngine')
   parser.add_argument( '-d', '--depth',      action='store_true')
   parser.add_argument( '-uvc', '--uvc',      action='store_true')
+  parser.add_argument( '-center', '--object_center', action='store_true')
   parser.add_argument( '-crw', '--NN_w',     type=int, default=320, help='NeuralNet in-width size')
   parser.add_argument( '-crh', '--NN_h',     type=int, default=240, help='NeuralNet in-height size')
   parser.add_argument( '-rww', '--resize_w', type=int, default=640, help='resize view windows width')
@@ -101,7 +106,7 @@ def main():
           assert r is True
           Img = cv2.cvtColor(Img_org, cv2.COLOR_BGR2RGB)
       else:
-          Img_org, dth = cam.read()
+          Img_org, dth, dth_np = cam.read()
           Img = cv2.resize(Img_org,(args.NN_w,args.NN_h))
       img = Image.fromarray(np.uint8(Img))
       draw = ImageDraw.Draw(img)
@@ -117,13 +122,18 @@ def main():
       if ans:
         for obj in ans:
             txt = labels[obj.label_id]
-            box = obj.bounding_box.flatten()
+            box = obj.bounding_box.flatten()                                # coord NN-in
             box = np.asarray(box,dtype=np.int)
-            rect_lt = (int( ratio_w * box[0] ), int( ratio_h * box[1] ))
+            rect_lt = (int( ratio_w * box[0] ), int( ratio_h * box[1] ))    # coord Camera-out
             rect_rb = (int( ratio_w * box[2] ), int( ratio_h * box[3] ))
             rect_xy = (int(rect_lt[0]+(rect_rb[0] - rect_lt[0])/2),int(rect_lt[1]+(rect_rb[1] - rect_lt[1])/2))
             if args.depth:
-                meters = dth.get_distance(rect_xy[0], rect_xy[1])
+                if not args.object_center:
+                    dth_obj= dth_np[rect_lt[1]:rect_rb[1], rect_lt[0]:rect_rb[0]]*cam.scale
+                    dth_obj[dth_obj<=0] = 1e3
+                    meters = dth_obj.min()                              # show nearest point in bbox
+                else:
+                    meters = dth.get_distance(rect_xy[1], rect_xy[0])  # show center of bbox
                 txt    = txt + " %.2fm"%(meters)
             Img = cv2.rectangle(Img_org, rect_lt, rect_rb, (255,255,255), 2)
             cv2.putText(Img, txt, rect_xy, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
