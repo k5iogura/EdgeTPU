@@ -108,6 +108,7 @@ def main():
       else:
           Img_org, dth, dth_np = cam.read()
           Img = cv2.resize(Img_org,(args.NN_w,args.NN_h))
+      msk = np.zeros(Img.shape,dtype=np.uint8)
       img = Image.fromarray(np.uint8(Img))
       #draw = ImageDraw.Draw(img)
 
@@ -129,9 +130,13 @@ def main():
             rect_xy = (int(rect_lt[0]+(rect_rb[0] - rect_lt[0])/2),int(rect_lt[1]+(rect_rb[1] - rect_lt[1])/2))
             if args.depth:
                 if not args.object_center:
-                    dth_obj= dth_np[rect_lt[1]:rect_rb[1], rect_lt[0]:rect_rb[0]]*cam.scale
-                    dth_obj[dth_obj<=0] = 1e3
-                    meters = dth_obj.min()                             # show nearest point in bbox
+                    dth_obj_m= dth_np[rect_lt[1]:rect_rb[1], rect_lt[0]:rect_rb[0]]*cam.scale
+                    #dth_obj_m[dth_obj<=0] = 1e3
+                    #meters = dth_obj_m.min()                             # show nearest point in bbox
+                    dth_obj_m = np.clip(dth_obj_m, 0.001, 20.000)         # histogram of meter wise until 20m
+                    bins, range_m = np.histogram(dth_obj_m, bins=20)
+                    range_floor = range_m[np.argmax(bins)]                # range which occupy most area in bbox
+                    meters = dth_obj_m[ dth_obj_m>range_floor ].min()     # nearest point in the range
                 else:
                     meters = dth.get_distance(rect_xy[1], rect_xy[0])  # show center of bbox
                 txt    = txt + " %.2fm"%(meters)
