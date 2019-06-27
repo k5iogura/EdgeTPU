@@ -100,7 +100,7 @@ def main():
 
   start = None
   img_count = 0
-  msk = None
+  seg = None
   ratio_w = args.resize_w/args.NN_w
   ratio_h = args.resize_h/args.NN_h
   while True:
@@ -112,7 +112,7 @@ def main():
       else:
           Img_org, dth, dth_np = cam.read()
           Img = cv2.resize(Img_org,(args.NN_w,args.NN_h))
-      if msk is None: msk = np.zeros(Img_org.shape,dtype=np.uint8)
+      if seg is None: seg = np.zeros(Img_org.shape,dtype=np.uint8)
       img = Image.fromarray(np.uint8(Img))
       #draw = ImageDraw.Draw(img)
 
@@ -125,7 +125,7 @@ def main():
       sys.stdout.write("%.3fFPS %dobjects"%(img_count/during, len(ans)))
       sys.stdout.flush()
       if ans:
-        msk = (msk/2).astype(np.uint8)
+        seg = (seg/2).astype(np.uint8)
         for obj in ans:
             txt = labels[obj.label_id]
             box = obj.bounding_box.flatten()                                # coord NN-in
@@ -146,13 +146,13 @@ def main():
                     meters  = dth_obj_m[indexXY].min()
                     indexXY = (indexXY[0]+rect_lt[1], indexXY[1]+rect_lt[0])
 #                    Img_org[indexXY[0], indexXY[1], 2] = 128
-                    msk[indexXY[0], indexXY[1], 2] = 255
+                    seg[indexXY[0], indexXY[1], 2] = 255
                 else:
                     meters = dth.get_distance(rect_xy[1], rect_xy[0])  # show center of bbox
                 txt    = txt + " %.2fm"%(meters)
             if args.rect: cv2.rectangle(Img_org, rect_lt, rect_rb, (255,255,255), 2)
             cv2.putText(Img_org, txt, rect_xy, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
-      Img_org = Img_org | msk
+      Img_org = Img_org | seg
       cv2.imshow('demo',Img_org)
       key=cv2.waitKey(1)
       if key==27: break
