@@ -105,6 +105,7 @@ def main():
   ratio_h = args.resize_h/args.NN_h
   while True:
       if start is None: start = time()
+      cam_start = time()
       if args.uvc:
           r, Img_org = cam.read()
           assert r is True
@@ -117,13 +118,13 @@ def main():
       #draw = ImageDraw.Draw(img)
 
       # Run inference.
+      cam_time = time() - cam_start
+      inf_start = time()
       ans = engine.DetectWithImage(img, threshold=args.threshold, keep_aspect_ratio=True,
                                    relative_coord=False, top_k=10)
-      during = (time()-start)
+      inf_time = time() - inf_start
+      drw_start= time()
       img_count+=1
-      sys.stdout.write('\b'*20)
-      sys.stdout.write("%.3fFPS %dobjects"%(img_count/during, len(ans)))
-      sys.stdout.flush()
       if ans:
         seg = (seg/2).astype(np.uint8)
         for obj in ans:
@@ -156,6 +157,14 @@ def main():
       cv2.imshow('demo',Img_org)
       key=cv2.waitKey(1)
       if key==27: break
+      during = (time()-start)
+      drw_time = time() - drw_start
+      sys.stdout.write('\b'*80)
+      sys.stdout.write(
+          "%.3fFPS cam:%.3f inf:%.3f drw:%.3f %dobjects"%
+          (img_count/during, cam_time, inf_time, drw_time, len(ans))
+      )
+      sys.stdout.flush()
       continue
 
   print("\nfin")
