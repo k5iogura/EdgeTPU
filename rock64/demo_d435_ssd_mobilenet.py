@@ -74,7 +74,8 @@ def main():
       '--output', help='File path of the output image.')
   parser.add_argument(
       '--threshold', type=float, default=0.45, help='Threshold for DetectionEngine')
-  parser.add_argument( '-d', '--depth',      action='store_true')
+  parser.add_argument( '-d',   '--depth',    action='store_true')
+  parser.add_argument( '-r',   '--rect',     action='store_true')
   parser.add_argument( '-uvc', '--uvc',      action='store_true')
   parser.add_argument( '-center', '--object_center', action='store_true')
   parser.add_argument( '-crw', '--NN_w',     type=int, default=320, help='NeuralNet in-width size')
@@ -98,7 +99,8 @@ def main():
       cam = D435(color=True, depth=args.depth)
 
   start = None
-  img_count=0
+  img_count = 0
+  msk = None
   ratio_w = args.resize_w/args.NN_w
   ratio_h = args.resize_h/args.NN_h
   while True:
@@ -110,7 +112,7 @@ def main():
       else:
           Img_org, dth, dth_np = cam.read()
           Img = cv2.resize(Img_org,(args.NN_w,args.NN_h))
-      msk = np.zeros(Img.shape,dtype=np.uint8)
+      if msk is None: msk = np.zeros(Img_org.shape,dtype=np.uint8)
       img = Image.fromarray(np.uint8(Img))
       #draw = ImageDraw.Draw(img)
 
@@ -123,6 +125,7 @@ def main():
       sys.stdout.write("%.3fFPS %dobjects"%(img_count/during, len(ans)))
       sys.stdout.flush()
       if ans:
+        msk = (msk/2).astype(np.uint8)
         for obj in ans:
             txt = labels[obj.label_id]
             box = obj.bounding_box.flatten()                                # coord NN-in
@@ -133,24 +136,23 @@ def main():
             if args.depth:
                 if not args.object_center:
                     dth_obj_m= dth_np[rect_lt[1]:rect_rb[1], rect_lt[0]:rect_rb[0]]*cam.scale
-                    #dth_obj_m[dth_obj<=0] = 1e3
-                    #meters = dth_obj_m.min()                             # show nearest point in bbox
                     dth_obj_m = np.clip(dth_obj_m, 0.001, 10.000)         # histogram of meter wise until 20m
                     bins, range_m = np.histogram(dth_obj_m, bins=10)
                     index_floor = np.argmax(bins)                         # range which occupy most area in bbox
                     range_floor = range_m[index_floor]
-                    #meters = dth_obj_m[ dth_obj_m>range_floor ].min()     # nearest point in the range
                     range_ceil  = range_m[index_floor+1]
                     indexXY = np.where((dth_obj_m>range_floor) & (dth_obj_m<range_ceil))
                     if len(indexXY[0]) == 0 and len(indexXY[1]) == 0:continue
                     meters  = dth_obj_m[indexXY].min()
                     indexXY = (indexXY[0]+rect_lt[1], indexXY[1]+rect_lt[0])
-                    Img_org[indexXY[0], indexXY[1], 2] = 128
+#                    Img_org[indexXY[0], indexXY[1], 2] = 128
+                    msk[indexXY[0], indexXY[1], 2] = 255
                 else:
                     meters = dth.get_distance(rect_xy[1], rect_xy[0])  # show center of bbox
                 txt    = txt + " %.2fm"%(meters)
-            #cv2.rectangle(Img_org, rect_lt, rect_rb, (255,255,255), 2)
+            if args.rect: cv2.rectangle(Img_org, rect_lt, rect_rb, (255,255,255), 2)
             cv2.putText(Img_org, txt, rect_xy, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
+      Img_org = Img_org | msk
       cv2.imshow('demo',Img_org)
       key=cv2.waitKey(1)
       if key==27: break
