@@ -4,6 +4,7 @@ import platform
 import subprocess
 from multiprocessing import Process, Queue, Value
 import pyrealsense2 as rs
+from random import randrange, seed
 from PIL import Image
 from PIL import ImageDraw
 from pdb import *
@@ -64,12 +65,12 @@ def inf_proc(qa, qb, args, status):
         if qb.full(): qb.get()
         qb.put(ans)
 
-def drw_proc(qi, args, labels, cam_scale, ratio_w, ratio_h, status):
+def drw_proc(qi, args, labels, colors, cam_scale, ratio_w, ratio_h, status):
     seg = None
     while True:
         ans, Img_org, dth_np = qi.get()
         if seg is None: seg = np.zeros(Img_org.shape,dtype=np.uint8)
-        seg = (seg/2).astype(np.uint8)
+        seg = (seg/args.momentum).astype(np.uint8)
         for obj in ans:
             txt = labels[obj.label_id]
             box = obj.bounding_box.flatten()                                # coord NN-in
@@ -90,7 +91,8 @@ def drw_proc(qi, args, labels, cam_scale, ratio_w, ratio_h, status):
                     meters  = dth_obj_m[indexXY].min()
                     indexXY = (indexXY[0]+rect_lt[1], indexXY[1]+rect_lt[0])
 #                    Img_org[indexXY[0], indexXY[1], 2] = 128
-                    seg[indexXY[0], indexXY[1], 2] = 255
+                    #seg[indexXY[0], indexXY[1], 2] = 255
+                    seg[indexXY[0], indexXY[1], :] = colors[obj.label_id]
                 else:
                     meters = dth.get_distance(rect_xy[1], rect_xy[0])  # show center of bbox
                 txt    = txt + " %.2fm"%(meters)
@@ -115,22 +117,26 @@ def main():
         default='../model/coco_labels.txt',
         help='Path of the labels file.'
     )
-    parser.add_argument(
-        '--input', help='File path of the input image.')
-    parser.add_argument(
-        '--output', help='File path of the output image.')
+ #   parser.add_argument(
+ #       '--input', help='File path of the input image.')
+ #   parser.add_argument(
+ #       '--output', help='File path of the output image.')
     parser.add_argument(
         '--threshold', type=float, default=0.45, help='Threshold for DetectionEngine')
     parser.add_argument( '-d',   '--depth',    action='store_true')
     parser.add_argument( '-r',   '--rect',     action='store_true')
     parser.add_argument( '-uvc', '--uvc',      action='store_true')
     parser.add_argument( '-center', '--object_center', action='store_true')
+    parser.add_argument( '-M', '--momentum',   type=int, default=3)
     parser.add_argument( '-crw', '--NN_w',     type=int, default=320, help='NeuralNet in-width size')
     parser.add_argument( '-crh', '--NN_h',     type=int, default=240, help='NeuralNet in-height size')
     parser.add_argument( '-rww', '--resize_w', type=int, default=640, help='resize view windows width')
     parser.add_argument( '-rwh', '--resize_h', type=int, default=480, help='resize view windows height')
     args = parser.parse_args()
 
+    print("NN Model :",args.model)
+    print("Label    :",args.label)
+    print("threshold:",args.threshold)
     print("NN: {} {} | uvc: {} | depth : {}".format(args.NN_w, args.NN_h, args.uvc, args.depth))
     if args.uvc:
         cam = cv2.VideoCapture(0)
@@ -142,7 +148,9 @@ def main():
     else:
         cam = D435(color=True, depth=args.depth)
 
+    seed(22222)
     labels = ReadLabelFile(args.label) if args.label else None
+    colors = [[r, 100+i, randrange(100,180)] for i,r in enumerate(range(180,180-len(labels),-1))]
     start = None
     img_count = 0
     ratio_w = args.resize_w/args.NN_w
@@ -153,10 +161,10 @@ def main():
     qi = Queue(3)
     qa = Queue(3)
     qb = Queue(3)
-    drw_subp = Process(target=drw_proc, args=(qi, args, labels, cam.scale, ratio_w, ratio_h, drw_status,))
     inf_subp = Process(target=inf_proc, args=(qa, qb, args, inf_status, ))
-    drw_subp.start()
+    drw_subp = Process(target=drw_proc, args=(qi, args, labels, colors, cam.scale, ratio_w, ratio_h, drw_status,))
     inf_subp.start()
+    drw_subp.start()
     ans_latest = []
     while True:
         if start is None: start = time()
