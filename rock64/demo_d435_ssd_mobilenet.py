@@ -158,7 +158,6 @@ def main():
     drw_subp.start()
     inf_subp.start()
     ans_latest = []
-    qa_dummy   = None
     while True:
         if start is None: start = time()
         cam_start = time()
@@ -176,7 +175,6 @@ def main():
         cam_time = time() - cam_start
         inf_start = time()
         if qa.full(): qa.get()
-        qa_dummy = img
         qa.put(img)
         try:
             ans_latest = qb.get_nowait()
@@ -201,8 +199,8 @@ def main():
         sys.stdout.flush()
 
     print("\nfin")
-    qa.put(qa_dummy)
     inf_status.value = 1
+    qa.put(None)
     cam.release()
 
 if __name__ == '__main__':
