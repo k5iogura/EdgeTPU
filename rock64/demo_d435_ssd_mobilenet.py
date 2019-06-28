@@ -54,20 +54,23 @@ def ReadLabelFile(file_path):
       ret[int(pair[0])] = pair[1].strip()
     return ret
 
-def inf_proc(qa, qb, args, status):
+def inf_proc(qa, qb, args, status, times):
     from edgetpu.detection.engine import DetectionEngine
     engine = DetectionEngine(args.model)
     while True:
+        start = time()
         img = qa.get()
         if status.value != 0:break
         ans = engine.DetectWithImage(img, threshold=args.threshold, keep_aspect_ratio=True,
                                      relative_coord=False, top_k=10)
         if qb.full(): qb.get()
         qb.put(ans)
+        times.value = time() - start
 
-def drw_proc(qi, args, labels, colors, cam_scale, ratio_w, ratio_h, status):
+def drw_proc(qi, args, labels, colors, cam_scale, ratio_w, ratio_h, status, times):
     seg = None
     while True:
+        start = time()
         ans, Img_org, dth_np = qi.get()
         if seg is None: seg = np.zeros(Img_org.shape,dtype=np.uint8)
         seg = (seg/args.momentum).astype(np.uint8)
@@ -102,6 +105,7 @@ def drw_proc(qi, args, labels, colors, cam_scale, ratio_w, ratio_h, status):
         cv2.imshow('demo',Img_org)
         key=cv2.waitKey(1)
         if key==27: break
+        times.value = time() - start
     status.value=1
 
 
@@ -128,6 +132,7 @@ def main():
     parser.add_argument( '-uvc', '--uvc',      action='store_true')
     parser.add_argument( '-center', '--object_center', action='store_true')
     parser.add_argument( '-M', '--momentum',   type=int, default=3)
+    parser.add_argument( '-Q', '--queue_size', type=int, default=2)
     parser.add_argument( '-crw', '--NN_w',     type=int, default=320, help='NeuralNet in-width size')
     parser.add_argument( '-crh', '--NN_h',     type=int, default=240, help='NeuralNet in-height size')
     parser.add_argument( '-rww', '--resize_w', type=int, default=640, help='resize view windows width')
@@ -157,12 +162,14 @@ def main():
     ratio_h = args.resize_h/args.NN_h
 
     drw_status = Value('i',0)
+    drw_times  = Value('f',0.)
     inf_status = Value('i',0)
-    qi = Queue(3)
-    qa = Queue(3)
-    qb = Queue(3)
-    inf_subp = Process(target=inf_proc, args=(qa, qb, args, inf_status, ))
-    drw_subp = Process(target=drw_proc, args=(qi, args, labels, colors, cam.scale, ratio_w, ratio_h, drw_status,))
+    inf_times  = Value('f',0.)
+    qi = Queue(args.queue_size)
+    qa = Queue(args.queue_size)
+    qb = Queue(args.queue_size)
+    inf_subp = Process(target=inf_proc, args=(qa, qb, args, inf_status, inf_times,))
+    drw_subp = Process(target=drw_proc, args=(qi, args, labels, colors, cam.scale, ratio_w, ratio_h, drw_status, drw_times))
     inf_subp.start()
     drw_subp.start()
     ans_latest = []
@@ -202,7 +209,7 @@ def main():
         sys.stdout.write('\b'*80)
         sys.stdout.write(
             "%.3fFPS cam:%.3f inf:%.3f drw:%.3f %dobjects"%
-            (img_count/during, cam_time, inf_time, drw_time, len(ans_latest))
+            (img_count/during, cam_time, inf_times.value, drw_times.value, len(ans_latest))
         )
         sys.stdout.flush()
 
