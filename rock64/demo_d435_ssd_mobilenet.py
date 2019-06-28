@@ -33,7 +33,7 @@ class D435:
           frame = self.pipeline.wait_for_frames()
           align_frame = self.align.process(frame)
           if self.color:
-              color_frame = align_frame.get_color_frame()
+              color_frame = frame.get_color_frame()   # no needs align.process for color stream
               color_frame = np.asanyarray(color_frame.get_data())
           if self.depth:
               depth_frame = align_frame.get_depth_frame()
@@ -96,7 +96,7 @@ def drw_proc(qi, args, labels, colors, cam_scale, ratio_w, ratio_h, status):
                 else:
                     meters = dth.get_distance(rect_xy[1], rect_xy[0])  # show center of bbox
                 txt    = txt + " %.2fm"%(meters)
-            if args.rect: cv2.rectangle(Img_org, rect_lt, rect_rb, (255,255,255), 2)
+            if args.rect: cv2.rectangle(seg, rect_lt, rect_rb, (255,255,255), 2)
             cv2.putText(Img_org, txt, rect_xy, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
         Img_org = Img_org | seg
         cv2.imshow('demo',Img_org)
