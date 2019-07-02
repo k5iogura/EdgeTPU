@@ -83,19 +83,29 @@ def drw_proc(qi, args, labels, colors, cam_scale, ratio_w, ratio_h, status, time
             rect_xy = (int(rect_lt[0]+(rect_rb[0] - rect_lt[0])/2),int(rect_lt[1]+(rect_rb[1] - rect_lt[1])/2))
             if args.depth:
                 if not args.object_center:
-                    dth_obj_m= dth_np[rect_lt[1]:rect_rb[1], rect_lt[0]:rect_rb[0]]*cam_scale
-                    dth_obj_m = np.clip(dth_obj_m, 0.001, 10.000) # histogram of meter wise until 20m
+                    dth_obj_m = dth_np[rect_lt[1]:rect_rb[1], rect_lt[0]:rect_rb[0]]*cam_scale
+
+                    # Search distance until nearest object
+                    dth_obj_m = np.clip(dth_obj_m, 0.001, 10.000) # histogram of meter wise
+                    bins, range_m = np.histogram(dth_obj_m, bins=10)
+                    index_floor = np.argmax(bins)                 # range which occupy most area in bbox
+                    range_floor = range_m[index_floor]
+                    indexYX = np.where((dth_obj_m>range_floor))
+                    if len(indexYX[0]) == 0 and len(indexYX[1]) == 0:continue
+                    meters  = dth_obj_m[indexYX].min()
+
+                    # Create meter wise histogram from nearest object to limit of D435
+                    dth_obj_m = np.clip(dth_obj_m, meters, meters+10.000)
                     bins, range_m = np.histogram(dth_obj_m, bins=10)
                     index_floor = np.argmax(bins)                 # range which occupy most area in bbox
                     range_floor = range_m[index_floor]
                     range_ceil  = range_m[index_floor+1]
-                    indexXY = np.where((dth_obj_m>range_floor) & (dth_obj_m<range_ceil))
-                    if len(indexXY[0]) == 0 and len(indexXY[1]) == 0:continue
-                    meters  = dth_obj_m[indexXY].min()
-                    indexXY = (indexXY[0]+rect_lt[1], indexXY[1]+rect_lt[0])
-#                    Img_org[indexXY[0], indexXY[1], 2] = 128
-                    #seg[indexXY[0], indexXY[1], 2] = 255
-                    seg[indexXY[0], indexXY[1], :] = colors[obj.label_id]
+                    indexYX = np.where((dth_obj_m>range_floor) & (dth_obj_m<range_ceil))
+                    if len(indexYX[0]) == 0 and len(indexYX[1]) == 0:continue
+                    meters  = dth_obj_m[indexYX].min()
+
+                    indexYX = (indexYX[0]+rect_lt[1], indexYX[1]+rect_lt[0])
+                    seg[indexYX[0], indexYX[1], :] = colors[obj.label_id]
                 else:
                     meters = dth.get_distance(rect_xy[1], rect_xy[0])  # show center of bbox
                 txt    = txt + " %.2fm"%(meters)
